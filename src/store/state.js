@@ -1,5 +1,6 @@
 const state = {
-    id:'',
+  id:'',
+  selectTab:'',
 }
 
 export default state;

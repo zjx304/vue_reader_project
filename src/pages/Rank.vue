@@ -67,7 +67,6 @@ export default {
       http.getRankBooks(this.rank_book_id)
         .then(data=>{
           this.book_list = data.ranking.books
-          console.log(this.book_list)
         })
     },
     // 当tab栏滑动时改变rank_book_id
