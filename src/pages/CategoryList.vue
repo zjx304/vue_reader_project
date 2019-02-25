@@ -17,7 +17,7 @@ import CategoryBar from 'components/common/CategoryBar'
 import MescrollVue from 'mescroll.js/mescroll.vue'
 import { mapState } from 'vuex'
 export default {
-  name:'category',
+  name:'categorylist',
   components:{
     'v-book-list':BookList,
     'v-category-bar':CategoryBar,

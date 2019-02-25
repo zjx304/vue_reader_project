@@ -7,6 +7,7 @@ const state = {
     major: '奇幻',      //主分类
     minor: '',      //子分类
   },
+  currentBook:null
 }
 
 export default state;

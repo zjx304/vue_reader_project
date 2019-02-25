@@ -35,6 +35,7 @@ import http from '../http/api'
 import BScroll from 'better-scroll'
 import {mapState} from 'vuex'
 export default {
+  name:'category',
   data(){
     return{
       titleName:'分类',
