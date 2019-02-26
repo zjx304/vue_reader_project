@@ -30,7 +30,7 @@ export default {
   },
   watch:{
     filter(){
-      console.log(1)
+      
     }
   },
   data(){
