@@ -70,7 +70,7 @@ export default {
 			})
     },
     filterChange(type){
-      console.log(type)
+      // console.log(type)
       this.$store.state.filter.type=type
     }
   },

@@ -4,7 +4,7 @@
       <div :class="['config-top','bg-black', { 'config-enter': show_config }]">顶部栏</div>
       <div :class="['config-right','bg-black', { 'config-enter': show_config }]">加入书架</div>
       <div :class="['config-bottom','bg-black', { 'config-enter': show_config }]">
-        <div class="config-bootom-item">目录</div>
+        <div class="config-bootom-item" @click="showChapter()">目录</div>
         <div class="config-bootom-item" @click="showNightMode()">夜间模式</div>
         <div class="config-bootom-item" @click="showConfigPop()">设置</div>
       </div>
@@ -89,6 +89,12 @@ export default {
       isAdd ? size++ : size--
       this.font_size=size
       // this.SET_FONT_SIZE(size);
+    },
+    // 显示章节 $emit触发父组件
+    showChapter(){
+      // this.show_config=false
+      this.$emit('show-chapter');
+      
     }
   }
 

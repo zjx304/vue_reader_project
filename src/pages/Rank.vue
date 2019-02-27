@@ -1,6 +1,6 @@
 <template>
   <section class="rank">
-    <!-- 头部 -->
+    <v-header></v-header>
     <mt-navbar v-model="selected">
       <mt-tab-item :id="item.en" v-for="(item,index) in top_tab_item" :key="index">
         {{item.ch}}
@@ -20,18 +20,22 @@
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
+    <v-tab-bar></v-tab-bar>
   </section>
 </template>
 
 <script>
 import http from '../http/api'
-
+import Header from '../components/common/Header'
+import TabBar from '../components/common/TabBar'
 import BookList from 'components/common/BookList'
 
 export default {
   name:'Rank',
   components:{
-    'v-book-list':BookList
+    'v-book-list':BookList,
+    'v-tab-bar':TabBar,
+    'v-header':Header
   },
   data () {
     return {
@@ -101,6 +105,7 @@ export default {
 <style lang="scss" scoped>
 
 .rank{
+  margin-top: .9rem;
   position: relative;
   height: 100%;
   overflow-y: scroll;

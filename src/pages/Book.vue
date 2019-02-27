@@ -1,25 +1,28 @@
 <template>
   <section class="book">
+    <v-header></v-header>
     <v-book-info></v-book-info>
-    <!-- <v-comment></v-comment> -->
-    <!-- <v-recommend></v-recommend> -->
-    <router-link :to="{ name: 'Read', params: { id: currentBook.id }}">
-			<p class="book-bar-content">立即阅读</p>
-		</router-link>
+    <v-comment></v-comment>
+    <v-recommend></v-recommend>
+    <v-book-bar></v-book-bar>
   </section>
 </template>
 
 <script>
 import {mapState,mapMutations} from 'vuex';
+import Header from '../components/common/Header'
 import BookIfo from '../components/common/BookInfo'
 import Comment from '../components/common/Comment'
 import Recommend from '../components/common/Recommend'
+import BookBar from '../components/common/BookBar'
 export default {
   name:'book',
   components:{
     'v-book-info':BookIfo,
     'v-comment':Comment,
-    'v-recommend':Recommend
+    'v-recommend':Recommend,
+    'v-book-bar':BookBar,
+    'v-header':Header
   },
   computed:{
     ...mapState([
@@ -47,6 +50,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.book{
+  position: relative;
+  margin-top: .9rem;
+}
 </style>
+

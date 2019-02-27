@@ -1,7 +1,7 @@
 <template>
   <section class="read">
-    <v-read-content :read-content="read_content"></v-read-content>
-    <v-chapter :chapter-name="chapter_name" :chapter_show="chapter_show"></v-chapter>
+    <v-read-content :read-content="read_content" @show-chapter="showChapter()"></v-read-content>
+    <v-chapter :chapter-name="chapter_name" :chapter-show="chapter_show" @select-chapter="selectChapterData"></v-chapter>
   </section>
 </template>
 
@@ -22,7 +22,8 @@ export default {
       chapter_name:[],
       chapter_show:false,
       read_content:[],
-      read_index:0
+      read_index:0,   //阅读到第几章
+      from_menu:'',    //从目录进来
     }
   },
   watch:{
@@ -46,7 +47,6 @@ export default {
     getChapterData(chapter_id){
       http.getChapterContent(chapter_id)
         .then(data => {
-          console.log(data)
           this.read_content.push({
 						content_title: data.title,
 						content_list: data.isVip ? ['vip章节，请到正版网站阅读'] : data.cpContent.split('\n')     //换行符分割文章
@@ -54,14 +54,32 @@ export default {
           var aa=data.cpContent.split('\n')
         })
     },
+    // ReadContent组件传出的是否显示章节
+    showChapter(){
+      this.chapter_show=true
+    },
+    selectChapterData(chapter_id){
+      // 先清空原有书籍
+      // this.readContent.splice(0, this.readContent.length);
+      this.read_content=[]
+      this.getChapterData(chapter_id)
+      this.chapter_show=false
+    }
   },
   created(){
     this.book_id=this.$route.params.id;
     this.getChapterName(this.book_id)
+
+    if(this.$route.query.menu) {
+			this.from_menu = true;
+			this.chapter_show = true;
+		}
+
   } 
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>
+
