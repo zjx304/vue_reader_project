@@ -36,6 +36,8 @@ export default {
   data(){
     return{
       category_list:[],
+      gender:'',
+      major:'',
       mescroll:null,
       mescrollDown:{
         use:false //禁止下拉刷新
@@ -104,7 +106,11 @@ export default {
     }
   },
   created(){
-    // console.log(this.filter)
+    this.gender = this.$route.query.gender;
+    this.major = this.$route.params.major;
+    this.$store.state.filter.gender=this.gender
+    this.$store.state.filter.major=this.major
+    this.$store.state.filter.minor=''
   }
 }
 </script>

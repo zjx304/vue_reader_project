@@ -1,5 +1,5 @@
 <template>
-  <section class="book">
+  <section class="book"> 
     <v-header></v-header>
     <v-book-info></v-book-info>
     <v-comment></v-comment>
@@ -26,7 +26,7 @@ export default {
   },
   computed:{
     ...mapState([
-        'currentBook',
+        'current_book'
     ])
   },
   methods:{

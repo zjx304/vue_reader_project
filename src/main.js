@@ -8,6 +8,9 @@ import store from './store/index'
 
 import MintUi from 'mint-ui'
 import 'mint-ui/lib/style.min.css'
+
+// import 'animate.css'
+
 Vue.use(MintUi)
 
 

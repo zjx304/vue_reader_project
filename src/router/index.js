@@ -7,6 +7,8 @@ const Book = () => import('pages/Book')
 const Read = () => import('pages/Read')
 const Home = () => import('pages/Home')
 const Myshelf = () => import('pages/Myshelf')
+const List = () => import('pages/List')
+const Search = () => import('pages/Search')
 Vue.use(Router)
 
 export default new Router({
@@ -23,7 +25,7 @@ export default new Router({
     },
     {
       path: '/book/:id',
-      name: 'book',
+      name: 'Book',
       component: Book
     },
     {
@@ -45,6 +47,16 @@ export default new Router({
       path: '/rank',
       name: 'Rank',
       component: Rank
-    },    
+    },  
+    {
+      path: '/list/:id',
+      name: 'List',
+      component: List
+    },   
+    {
+      path:'/Search',
+      name:'Search',
+      component:Search
+    }
   ]
 })

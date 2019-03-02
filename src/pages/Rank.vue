@@ -2,7 +2,7 @@
   <section class="rank">
     <v-header></v-header>
     <mt-navbar v-model="selected">
-      <mt-tab-item :id="item.en" v-for="(item,index) in top_tab_item" :key="index">
+      <mt-tab-item class="gray" :id="item.en" v-for="(item,index) in top_tab_item" :key="index">
         {{item.ch}}
       </mt-tab-item>
     </mt-navbar>
@@ -11,7 +11,7 @@
         <div class="rank-box">
           <ul class="rank-tab-list">
             <li v-for="left_tab_item in leftTab(item.en)" :key="left_tab_item._id" @click="changeRankId(left_tab_item._id)">
-              {{left_tab_item.shortTitle}}
+              <span>{{left_tab_item.shortTitle}}</span>
             </li>
           </ul>
           <div class="rank-book-list">
@@ -103,20 +103,57 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.gray{
+  color:#8a8a8f;
+}
+.red{
+  color:#ee4745;
+}
+.border-color{
+  color:#f5f5f5;
+}
 .rank{
   margin-top: .9rem;
   position: relative;
   height: 100%;
   overflow-y: scroll;
+  .mint-navbar{
+    .is-selected{
+      color:#ee4745;
+      margin-bottom: 0;
+      border:none;
+    }
+    .mint-tab-item{
+      padding:.25rem 0;
+      font-size: .26rem;
+    }
+
+  }
 }
+
+
 
 
 .rank-box{
   display: flex;
   justify-content: space-between;
   .rank-tab-list{
-    flex:0 0 1.5rem;
+    flex:0 0 1.48rem;
+    li{
+      // height: 1.06rem;
+      height: .55rem;
+      width: 100%;
+      position: relative;
+      text-align: center;
+      border-top: 1px solid #f5f5f5;
+      &>span{
+        text-align: center;
+        font-size: .26rem;
+      }
+    }
+    li:first-child{
+      border-top: none;
+    }
   }
   .rank-book-list{
     height: 10rem;

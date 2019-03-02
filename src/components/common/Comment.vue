@@ -33,7 +33,7 @@ export default {
   name:'comment',
   computed:{
     ...mapState([
-      'currentBook'
+      'current_book'
     ])
   },
   data(){
@@ -42,7 +42,7 @@ export default {
     }
   },
   created(){
-    http.getReview(this.currentBook.id)
+    http.getReview(this.current_book.id)
       .then(data => {
           this.comment_list=data
           console.log(data)

@@ -1,12 +1,12 @@
 <template>
   <section class="header">
-    头部
+    <router-link :to="{ name: 'Search'}">头部</router-link>
   </section>
 </template>
 
 <script>
 export default {
-  name:'header'
+  name:'Header'
 }
 </script>
 

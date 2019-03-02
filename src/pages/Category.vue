@@ -20,14 +20,15 @@
               </div>
               <ul class="categorys-items">
                 <li v-for="(item, index2) in val" :key="index2">
-                  <div class="item-left">
-                    <span>{{item.name}}</span>
-                    <span>{{item.bookCount}}本</span>
-                  </div>
-                  <div class="item-right">
-                    <img src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=4074753802,623983736&fm=58" alt="">
-                  </div>
-
+                  <router-link :to="{ name: 'CategoryList', params: { major: item.name}, query: { gender:gender} }">
+                    <div class="item-left">
+                      <span>{{item.name}}</span>
+                      <span>{{item.bookCount}}本</span>
+                    </div>
+                    <div class="item-right">
+                      <img src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=4074753802,623983736&fm=58" alt="">
+                    </div>
+                  </router-link>
                 </li>
               </ul>
             </li>
@@ -56,6 +57,7 @@ export default {
       scrollY: 0, //右侧列表滑动的y轴坐标
       rightLiTops:[], //所有分类头部位置
       category_data:[],
+      gender:'male',
       category_label:{
         male:'男生',
         female:'女生',
@@ -136,11 +138,10 @@ export default {
     getCategoryData(){
       http.getCategory()
         .then(data=>{
-          // console.log(data)
           delete data.ok
           // 把数据保存到vuex state
           this.category_data=data
-
+          console.log(data)
           this.$nextTick(() =>{
               //左右两边滚动
               this. _initBScroll();
@@ -243,27 +244,30 @@ export default {
         display: flex;
         flex-wrap:wrap;
         li{
-          display: flex;
-          justify-content: space-between;
           flex:0 0 2.88rem;
           margin-right: .16rem;
           height: 1.16rem;
           background: #f9f9fb;
           align-items: center;
           margin-bottom: .16rem;
-          .item-left{
-            margin-left: .22rem;
-            &>span:first-child{
-              display: block;
-              font-size: .25rem;
-              color: #616166;
-            }
-            &>span:last-child{
-              display: block;
-              font-size: .2rem;
-              color: #9b9b9b;
+          a{
+            display: flex;
+            justify-content: space-between;
+            .item-left{
+              margin-left: .22rem;
+              &>span:first-child{
+                display: block;
+                font-size: .25rem;
+                color: #616166;
+              }
+              &>span:last-child{
+                display: block;
+                font-size: .2rem;
+                color: #9b9b9b;
+              }
             }
           }
+
           .item-right{
             margin-top: .17rem;
             margin-right: .12rem;

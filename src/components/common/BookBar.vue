@@ -1,11 +1,11 @@
 <template>
   <section class="book-bar">
     <div class="book-bar-content">
-      <div class="book-bar-left book-bar-item">
+      <div class="book-bar-left book-bar-item" @click="addBookToShelf(current_book)">
         加入书架
       </div>
       <div class="book-bar-right book-bar-item">
-        <router-link class="book-bar-right-text" :to="{ name: 'Read', params: { id: currentBook.id }}">
+        <router-link class="book-bar-right-text" :to="{ name: 'Read', params: { id: current_book.id }}">
           立刻阅读
         </router-link>
       </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import {mapState, mapMutations} from 'vuex';
 export default {
   name:'book-bar',
   data(){
@@ -24,9 +24,17 @@ export default {
   },
   computed:{
     ...mapState([
-        'currentBook'
+        'current_book'
     ])    
   },
+  methods:{
+    ...mapMutations([
+      'addToShelft'
+    ]),
+    addBookToShelf(book){
+      this.addToShelft(book)
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

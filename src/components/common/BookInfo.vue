@@ -48,7 +48,7 @@ export default {
   },
   computed:{
     ...mapState([
-			'currentBook'
+			'current_book'
 		]),
   },
   methods:{
@@ -57,7 +57,7 @@ export default {
 		]),
   },
   created(){
-    http.getBook(this.currentBook.id)
+    http.getBook(this.current_book.id)
      .then(data=>{
        this.book=data
        console.log(data)

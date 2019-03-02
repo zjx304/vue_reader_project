@@ -2,7 +2,7 @@
   <section class="book-list" >
     <ul class="book-list-content">
       <li v-for="(book) in bookList" :key="book._id">
-        <router-link :to="{name:'book',params:{id:book._id}}">
+        <router-link :to="{name:'Book',params:{id:book._id}}">
           <div class="book-list-box">
             <div class="book-list-left">
               <img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1642072250,2261007888&fm=58" alt="">
@@ -54,7 +54,6 @@ export default {
 <style lang="scss" scoped>
 
 .book-list-content{
-  border-top:1px solid rgb(199, 199, 199);
   li{
     .book-list-box{
       box-sizing: border-box;

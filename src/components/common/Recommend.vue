@@ -26,7 +26,7 @@ export default {
   },
   computed:{
     ...mapState([
-        'currentBook'
+        'current_book'
     ])    
   },
   methods:{
@@ -34,7 +34,7 @@ export default {
   },
   created(){
     // 限制4条
-    http.getRecommend(this.currentBook.id)
+    http.getRecommend(this.current_book.id)
       .then(data => {
           this.recommend_list = data;
           console.log(this.recommend_list )
