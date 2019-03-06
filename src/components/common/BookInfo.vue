@@ -65,7 +65,6 @@ export default {
        let book_data=this.current_book
        book_data.id=this.current_book.id
        book_data.title=data.title
-       console.log(book_data)
        book_data.cover=staticPath+data.cover
        book_data.author=data.author
        book_data.lastChapter=data.lastChapter

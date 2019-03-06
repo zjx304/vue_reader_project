@@ -13,7 +13,7 @@
     <!-- 分类 排行 搜索 -->
     <mt-header class="type-two" v-show="type=='type-two'">
         <mt-button  slot="left">{{title}}</mt-button>
-        <mt-button  slot="right" @click="jumpToSearch()">搜索</mt-button>
+        <mt-button  slot="right" @click="jumpToSearch()" class="iconfont icon-sousuo"></mt-button>
     </mt-header>
     <!-- 返回 标题 -->
     <mt-header class="type-three" :title="title" v-show="type=='type-three'">
@@ -76,6 +76,8 @@ export default {
 .mint-header{
   background: #a70a0a;
   height: .9rem;
+  padding:0 .33rem;
+  box-sizing: border-box;
 }
 </style>
 

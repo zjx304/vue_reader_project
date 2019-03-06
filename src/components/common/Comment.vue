@@ -1,5 +1,5 @@
 <template>
-  <section class="comment">
+  <section class="comment" v-if="comment_list.length">
     <div class="comment-title gray">
       <span>热门短评</span>
     </div>
@@ -45,7 +45,7 @@ export default {
     http.getReview(this.current_book.id)
       .then(data => {
           this.comment_list=data
-          console.log(data)
+          // console.log(data)
       })
   }
 }

@@ -116,14 +116,12 @@ export default {
       itemArray.push(top)
       //获取右边所有li
       let allList = this.$refs.itemList.getElementsByClassName('categorys-li');
-      // console.log(allList)
       //allList伪数组转化成真数组
       Array.prototype.slice.call(allList).forEach(li => {
         top += li.clientHeight; //获取所有li的每一个高度
         itemArray.push(top)
       });
       this.rightLiTops = itemArray;
-      console.log(this.rightLiTops)
     },
     //点击左边实现滚动
     clickList(index){

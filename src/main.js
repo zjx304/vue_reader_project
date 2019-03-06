@@ -8,7 +8,9 @@ import store from './store/index'
 
 import MintUi from 'mint-ui'
 import 'mint-ui/lib/style.min.css'
-
+// 字体图标
+// import './assets/iconfont/iconfont'
+import './assets/iconfont/iconfont.css'
 
 Vue.use(MintUi)
 

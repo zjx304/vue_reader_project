@@ -1,5 +1,5 @@
 <template>
-  <section class="recommend">
+  <section class="recommend" v-if="recommend_list.length">
     <div class="recommend-content">
       <div class="recommend-title">本书追友还在读</div>
       <ul class="recommend-list">
@@ -37,7 +37,7 @@ export default {
     http.getRecommend(this.current_book.id)
       .then(data => {
           this.recommend_list = data;
-          console.log(this.recommend_list )
+          // console.log(this.recommend_list )
       })
   }
 }

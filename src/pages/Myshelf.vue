@@ -3,8 +3,8 @@
     <div class="header">
       <div class="left">追书神器</div>  
       <div class="right">
-        <span class="search" @click="showSearch()">搜索</span>
-        <span class="history" @click="showHistory()">历史</span>
+        <span class="history iconfont icon-lishi" @click="showHistory()"></span>
+        <span class="search iconfont icon-sousuo" @click="showSearch()"></span>
       </div>
     </div>	
     <v-shelf-list :shelf-list="shelf_book_list" v-if="shelf_book_list.length>0"></v-shelf-list>
@@ -65,11 +65,14 @@ export default {
   padding:0 .33rem;
   box-sizing: border-box;
   .left{
-    font-size: .51rem;
+    font-size: .45rem;
     line-height: .9rem;
   }
   .right{
     line-height: .9rem;
+    .search{
+      margin-left: .3rem;
+    }
   }
 }
 .my-shelf{

@@ -38,7 +38,6 @@ export default {
   },
   data(){
     return{
-      // book:Object
       book_list:[]
     }
   },
@@ -46,7 +45,6 @@ export default {
     getHomeListData(){
 			http.getBooks(this.channel._id)
 				.then(data => {
-          // console.log(data)
           this.book_list=data
         })
 		}

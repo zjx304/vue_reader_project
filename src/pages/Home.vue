@@ -3,12 +3,11 @@
     <v-header :title="title" :type="type"></v-header>
     <div class="home-swiper">
       <swiper :options="swiperHomeOption">
-        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
-        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
-        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
-        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
-        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
-        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
+        <swiper-slide v-for="swiper_item in swiper_img" :key="swiper_item._id">
+          <router-link :to="{ name: 'Book', params: { id: swiper_item._id }}">
+            <img :src="swiper_item.img" alt="">
+          </router-link>
+        </swiper-slide>
       </swiper>
       <div class="swiper-pagination"></div>
     </div>
@@ -78,7 +77,7 @@ export default {
       female_channel:[],//女频
       free_channel:[],
       publish_channel:[],
-      sex:'male',
+      sex:'male',   //设置默认男性，以后数据sex都是male
       tabs: [
               {name: '精选',}, 
               {name: '男频',}, 
@@ -86,8 +85,6 @@ export default {
               {name: '限免',}, 
               {name: '出版',}, 
             ],
-      // tabWidth: 80, // 每个tab的宽度
-      // barWidth: 40, // tab底部红色线的宽度
       curIndex: 0, // 当前tab的下标
       tabScrollLeft: 0, // 菜单滚动条的位置
       swiperOption: { // 轮播配置
@@ -103,7 +100,8 @@ export default {
       },
       isMounted:false,
       searchBarFixed:false,
-      offsetTop:0    //吸顶
+      offsetTop:0,    //吸顶
+      swiper_img:[]   //轮播
     }
   },
   components: {
@@ -145,8 +143,6 @@ export default {
     getHomeRecommendData(){
       http.getFeaturedData()
         .then(data=>{
-          console.log(data)
-
           // data 类型 畅销短篇 m站顶部banner 男生热门 女生佳作 男生完本 男生大神区 女生红文区 男频限免 女频限免
           // 由于没有找到特定的接口，所以精选为全部 包含男频 女频的内容
           // 精选为全部
@@ -171,7 +167,6 @@ export default {
               return item.type !=1&&item.order>=7; 
           })
           // this.feature=data.delete
-
 					// let sexOrder = this.sex === 'male' ? [2, 5, 7, 9] : [1, 4, 6, 8];
 					// data = data.filter((obj) => {
 					// 	return sexOrder.includes(obj.order) && obj.type === 0;
@@ -192,6 +187,13 @@ export default {
           this.searchBarFixed = false
       }
     },
+    // 获取轮播图
+    getSwiperPictures(){
+      http.getSwiperPictures()
+        .then(data => {
+          this.swiper_img=data
+        })
+    }
   },
   mounted(){
     this.isMounted=true
@@ -200,6 +202,7 @@ export default {
   },
   created(){
     this.getHomeRecommendData()
+    this.getSwiperPictures()
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
@@ -231,10 +234,10 @@ export default {
     margin:0 auto;
     width: 6.97rem;
     height: 2.84rem;
+    padding:.15rem 0;
     .swiper-container{
       width: 100%;
       height: 100%;
-      padding:0;
       .swiper-wrapper{
         width: 100%;
         height: 100%;
@@ -244,6 +247,7 @@ export default {
           img{
             width: 100%;
             height: 100%;
+            border-radius: .15rem;
           }
         }
       }
@@ -281,18 +285,19 @@ export default {
   vertical-align: middle;
 }
 .tabs-warp .tabs-content .tabs .active{
-  color: #FF6990;
+  color: #a70a0a;;
+
 }
 /*菜单进度*/
 .tabs-warp .tab-bar{
   position: relative;
   height: 2px;
-  background-color: #FF6990;
+  background-color: #a70a0a;;
   transition: left 300ms;
   width: .8rem;
 }
 /*列表*/
 .swiper-container{
-  padding-bottom:2rem;
+  padding-bottom:1.2rem;
 }
 </style>
