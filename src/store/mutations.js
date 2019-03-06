@@ -1,12 +1,22 @@
 // import http from 'http/index.js'
 
-
 import {setStore,getStore,removeStore} from '../assets/js/storage_function';
 const mutations = {
   // shareCoin(state){
   //   // const url = '/coin/addCoin';
   //   // http.sendAjax(url, {coin_name:'share_sns',way_name: '分享论坛'});
   // },
+  // 从localsorage取出保存的数据初始
+  getStorageInitData(state,book){
+    let shelf_book_list=getStore('SHEFL_BOOK_LIST')
+    if(shelf_book_list){
+      state.shelf_book_list=JSON.parse(shelf_book_list)
+    }
+    let search_history=getStore('SEARCH_HISTORY')
+    if(search_history){
+      state.search_history=JSON.parse(search_history)
+    }
+  },
   // 当前查看书籍信息
   setCurrentBookInfo(state,book){
     state.current_book=book

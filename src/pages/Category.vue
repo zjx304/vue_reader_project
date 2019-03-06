@@ -1,6 +1,6 @@
 <template>
   <section class="category">
-    <v-header ref='header'></v-header>
+    <v-header :title="title" :type="type"></v-header>
     <div class="content">
       <div class="category-box">
         <!-- 左边 -->
@@ -41,7 +41,7 @@
 </template>
 <script>
 import http from '../http/api'
-import Header from '../components/common/Header'
+import Header from 'components/common/Header'
 import TabBar from '../components/common/TabBar'
 import BScroll from 'better-scroll'
 import {mapState} from 'vuex'
@@ -53,7 +53,9 @@ export default {
   },
   data(){
     return{
-      titleName:'分类',
+      title:'分类',
+      type:'type-two',
+      // titleName:'分类',
       scrollY: 0, //右侧列表滑动的y轴坐标
       rightLiTops:[], //所有分类头部位置
       category_data:[],

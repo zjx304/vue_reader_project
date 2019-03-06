@@ -1,6 +1,9 @@
 <template>
   <section :class="['chapter',{'chapter-show':chapterShow}]">
-    <div class="chapter-title">返回</div>
+    <div class="chapter-title">
+      <span @click="$router.go(-1)">返回</span>
+      <span class="book-name"></span>
+    </div>
     <div class="chapter-head">
       <span class="chapter-total">共{{chapterName.length}}章</span>
       <span class="chapter-sort" @click="chapterSort()">

@@ -11,8 +11,18 @@
 
 <script>
 import http from './http/api'
+import {mapState,mapMutations} from 'vuex'
 export default {
   name: 'App',
+  methods:{
+    ...mapMutations([
+      // 获取保存到localstorge数据
+      'getStorageInitData'
+		]),
+  },
+  created(){
+    this.getStorageInitData()
+  }
 }
 </script>
 

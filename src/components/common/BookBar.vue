@@ -1,9 +1,11 @@
 <template>
   <section class="book-bar">
     <div class="book-bar-content">
-      <div class="book-bar-left book-bar-item" @click="addBookToShelf(current_book)">
-        加入书架
+      <div class="book-bar-left book-bar-item" @click="addBookToShelf()">
+        <span v-if="is_added">已加入书架</span>
+        <span v-else>加入书架</span>
       </div>
+
       <div class="book-bar-right book-bar-item">
         <router-link class="book-bar-right-text" :to="{ name: 'Read', params: { id: current_book.id }}">
           立刻阅读
@@ -19,21 +21,31 @@ export default {
   name:'book-bar',
   data(){
     return{
-
+      is_added:false
     }
   },
   computed:{
     ...mapState([
-        'current_book'
+        'current_book',
+        'shelf_book_list'
     ])    
   },
   methods:{
     ...mapMutations([
-      'addToShelft'
+      'addToShelft',
+      'setCurrentBookInfo'
     ]),
-    addBookToShelf(book){
+    addBookToShelf(){
+      let book=this.current_book
+      book.isInShelf=true
+      this.setCurrentBookInfo(book)
       this.addToShelft(book)
+      this.is_added=true
+
     }
+  },
+  created(){
+    this.is_added=this.current_book.isInShelf
   }
 }
 </script>

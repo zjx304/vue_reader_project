@@ -29,7 +29,8 @@
 
 <script>
 export default {
-  name:'tabbar'
+  name:'tabbar',
+  
 }
 </script>
 
@@ -38,7 +39,9 @@ export default {
   position: fixed;
   bottom:0;
   width: 100%;
+  background: #fff;
   border-top: 1px solid #ececec;
+  z-index: 10;
   .tab-bar-content{
     ul{
       display: flex;

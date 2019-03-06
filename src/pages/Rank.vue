@@ -1,6 +1,6 @@
 <template>
   <section class="rank">
-    <v-header></v-header>
+    <v-header :title="title" :type="type"></v-header>
     <mt-navbar v-model="selected">
       <mt-tab-item class="gray" :id="item.en" v-for="(item,index) in top_tab_item" :key="index">
         {{item.ch}}
@@ -39,6 +39,8 @@ export default {
   },
   data () {
     return {
+      title:'排行',
+      type:'type-two',
       data:Object,
       selected:'male', //默认显示第一个选项卡的内容  需要和id绑定
       male_rank_list:[],

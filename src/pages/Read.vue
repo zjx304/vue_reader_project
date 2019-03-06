@@ -7,6 +7,7 @@
 
 <script>
 import http from '../http/api'
+import { MessageBox } from 'mint-ui';
 import {mapState,mapMutations} from 'vuex';
 import ReadCotent from '../components/common/ReadContent'
 import Chapter from '../components/common/Chapter'
@@ -26,6 +27,11 @@ export default {
       from_menu:'',    //从目录进来
     }
   },
+  computed:{
+    ...mapState([
+      'current_book'
+    ])
+  },
   watch:{
     // 监听章节和阅读到第几章变化
     chapter_name(){
@@ -36,6 +42,10 @@ export default {
     }
   },
   methods:{
+    ...mapMutations([
+      'setCurrentBookInfo',
+      'addToShelft'
+    ]),
     // 获取所有章节名
     getChapterName(book_id){
       http.getChapters(book_id)
@@ -64,18 +74,42 @@ export default {
       this.read_content=[]
       this.getChapterData(chapter_id)
       this.chapter_show=false
-    }
+    },
   },
   created(){
     this.book_id=this.$route.params.id;
     this.getChapterName(this.book_id)
-
     if(this.$route.query.menu) {
 			this.from_menu = true;
 			this.chapter_show = true;
-		}
+  }
 
-  } 
+  },
+  beforeRouteLeave(to, from, next) {
+		if (!this.current_book.isInShelf && !this.from_menu) {
+           MessageBox.confirm('', { 
+            title: '加入书架',
+            message: '喜欢本书就加入书架吧',
+            showCancelButton: true,
+            cancelButtonText:'不用了',
+            confirmButtonText:'加入书架'
+         }).then(action => { 
+         if (action == 'confirm') {     //确认的回调
+            let book = this.current_book;
+            book.isInShelf = true;
+            this.setCurrentBookInfo(book)
+            this.addToShelft(book)
+            next()
+        }
+      }).catch(err => { 
+        if (err == 'cancel') {     //取消的回调
+          next()
+        } 
+      });
+		} else {
+			next()
+		}
+	} 
 }
 </script>
 

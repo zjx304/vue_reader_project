@@ -1,20 +1,26 @@
 <template>
   <section class="category-bar">
     <div class="category-filter-type">
-      <ul>
-        <li v-for="(type,index) in typeList" :class="['cat-filter-item', { active: type.value === selectedType }]" :data-value="type.value"
-				:data-name="type.name" :key="index" @click="filterChange(type.value)">
-				{{ type.name }}
-			  </li>
-      </ul>
+      <div class="filter" @click="filter_show=!filter_show">筛选</div>
+      <transition name="filter">
+        <ul v-show="filter_show">
+          <li v-for="(type,index) in typeList" :class="['cat-filter-item', { active: type.value === selectedType }]" :data-value="type.value"
+          :data-name="type.name" :key="index" @click="filterChange(type.value)">
+          {{ type.name }}
+          </li>
+        </ul>
+      </transition>
     </div>
     <div class="category-filter-major">
-      <ul class="cat-fliter-list" ref="minorList">
-        <li v-for="(minor,index2) in minorList" :class="['cat-filter-item', { active: minor === selectedMinor }]" :data-value="minor"
-          :key="index2">
-          {{ minor }}
-        </li>
-      </ul>
+      <div class="type" @click="type_show=!type_show">类型</div>
+      <transition name="type">
+        <ul class="cat-fliter-list" ref="minorList" v-show="type_show">
+          <li v-for="(minor,index2) in minorList" :class="['cat-filter-item', { active: minor === selectedMinor }]" :data-value="minor"
+            :key="index2">
+            {{ minor }}
+          </li>
+        </ul>
+      </transition>
     </div>
   </section>
 </template>
@@ -54,7 +60,9 @@ export default {
 			selectedType: 'hot',
 			selectedTypeName: '热门',
 			minorList: ['全部'],   //小分类
-			selectedMinor: '全部',
+      selectedMinor: '全部',
+      filter_show:false,   
+      type_show:false
     }
   },
   methods:{
@@ -70,9 +78,11 @@ export default {
 			})
     },
     filterChange(type){
-      // console.log(type)
+      console.log(type)
       this.$store.state.filter.type=type
-    }
+      this.filter_show=!this.filter_show
+    },
+
   },
   created(){
     this.getMinorList()
@@ -81,8 +91,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-li{
-  display: inline-block;
+.category-bar{
+  display: flex;
+  justify-content: space-between;
 }
 </style>
 

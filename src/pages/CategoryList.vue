@@ -1,17 +1,21 @@
 <template>
   <section class="categorylist">
+    <v-header :title="title" :type="type"></v-header>
     <!-- 头部 -->
     <!-- 过滤栏 -->
-    <v-category-bar :gender="filter.gender" :major="filter.major"></v-category-bar>
-    <!-- 列表栏 -->
-    <mescroll-vue ref="mescroll" :down="mescrollDown" :up="mescrollUp" @init="mescrollInit">
-      <v-book-list :book-list="category_list"></v-book-list>
-    </mescroll-vue>
+    <div class="list">
+      <v-category-bar class="category-bar" :gender="filter.gender" :major="filter.major"></v-category-bar>
+      <!-- 列表栏 -->
+      <mescroll-vue ref="mescroll" :down="mescrollDown" :up="mescrollUp" @init="mescrollInit">
+        <v-book-list :book-list="category_list"></v-book-list>
+      </mescroll-vue>
+    </div>
   </section>
 </template>
 
 <script>
 import http from '@/http/api'
+import Header from 'components/common/Header'
 import BookList from 'components/common/BookList'
 import CategoryBar from 'components/common/CategoryBar'
 import MescrollVue from 'mescroll.js/mescroll.vue'
@@ -21,6 +25,7 @@ export default {
   components:{
     'v-book-list':BookList,
     'v-category-bar':CategoryBar,
+    'v-header':Header,
     MescrollVue // 注册mescroll组件
   },
   computed: {
@@ -35,6 +40,8 @@ export default {
   },
   data(){
     return{
+      title:'分类详情',
+      type:'type-three',
       category_list:[],
       gender:'',
       major:'',
@@ -116,6 +123,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.list{
+  margin-top: .9rem;
+}
  .mescroll {
     position: fixed;
     // top: 44px;

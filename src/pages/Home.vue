@@ -1,16 +1,28 @@
 <template>
   <section class="home">
-    <v-header></v-header>
-    <div class="tabs-warp">
+    <v-header :title="title" :type="type"></v-header>
+    <div class="home-swiper">
+      <swiper :options="swiperHomeOption">
+        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
+        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
+        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
+        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
+        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
+        <swiper-slide><img src="../assets/logo.png"></swiper-slide>
+      </swiper>
+      <div class="swiper-pagination"></div>
+    </div>
+    <div class="tabs-warp" :class="searchBarFixed == true ? 'isFixed' :''">
       <div ref="tabsContent" class="tabs-content">
         <div style="display: inline-block"> <!--PC端运行,加上这个div可修复tab-bar错位的问题 -->
           <ul class="tabs" ref="tabs">
-            <li class="tab" v-for="(tab,i) in tabs" :class="{active: i===curIndex}" :style="{width: tabWidth+'px'}" :key="i" @click="changeTab(i)">{{tab.name}}</li>
+            <li class="tab" v-for="(tab,i) in tabs" :class="{active: i===curIndex}" :key="i" @click="changeTab(i)">{{tab.name}}</li>
           </ul>
-          <div class="tab-bar" :style="{width: barWidth+'px', left: barLeft}"></div>
+          <div class="tab-bar" :style="{left: barLeft}"></div>
         </div>
       </div>
     </div>
+    <div v-if="searchBarFixed" class="replace-tab"></div>
     <!--轮播-->
     <swiper ref="mySwiper" :options="swiperOption">
       <swiper-slide>
@@ -59,6 +71,8 @@ export default {
   name: 'home',
   data () {
     return {
+      title:'主页',
+      type:"type-one",
       feature_channel:[],  //精选
       male_channel:[],  //男频
       female_channel:[],//女频
@@ -72,8 +86,8 @@ export default {
               {name: '限免',}, 
               {name: '出版',}, 
             ],
-      tabWidth: 80, // 每个tab的宽度
-      barWidth: 40, // tab底部红色线的宽度
+      // tabWidth: 80, // 每个tab的宽度
+      // barWidth: 40, // tab底部红色线的宽度
       curIndex: 0, // 当前tab的下标
       tabScrollLeft: 0, // 菜单滚动条的位置
       swiperOption: { // 轮播配置
@@ -82,7 +96,14 @@ export default {
             this.changeTab(this.swiper.activeIndex)
           }
         }
-      }
+      },
+      swiperHomeOption:{
+        // autoplay,
+        // loop:true
+      },
+      isMounted:false,
+      searchBarFixed:false,
+      offsetTop:0    //吸顶
     }
   },
   components: {
@@ -97,7 +118,12 @@ export default {
       return this.$refs.mySwiper.swiper
     },
     barLeft () { // 红线的位置
-      return (this.tabWidth * this.curIndex + (this.tabWidth - this.barWidth) / 2) + 'px'
+    // 需要等dom加载完才能获取到dom
+      if(this.isMounted){
+        var tabWidth=document.getElementsByClassName('tab')[0].offsetWidth
+        var barWidth=document.getElementsByClassName('tab-bar')[0].offsetWidth
+        return (tabWidth * this.curIndex + (tabWidth - barWidth) / 2) + 'px'
+      }
     }
   },
   methods: {
@@ -128,20 +154,21 @@ export default {
           // 女频 为女生佳作 女生红文区
           // 限免 男频限免 女频限免
           // 出版
+          // 为了凑足每类都有3个
           this.feature_channel=data.filter(function(item){
-              return item.type !=1; 
+              return item.type !=1 &&item.order<=4; 
           })
           this.male_channel=data.filter(function(item){
               return item.title=='男生热门'||item.title=='男生完本'||item.title=='男生大神区'; 
           })
           this.female_channel=data.filter(function(item){
-              return item.title=='女生佳作'||item.title=='女生红文区'; 
+              return item.title=='女生佳作'||item.title=='女生红文区'||item.title=='女频限免'; 
           })
           this.free_channel=data.filter(function(item){
-              return item.title=='男频限免'||item.title=='女频限免'; 
+              return item.title=='男频限免'||item.title=='女频限免'||item.title=='男生大神区'; 
           })
           this.publish_channel=data.filter(function(item){
-              return item.type !=1; 
+              return item.type !=1&&item.order>=7; 
           })
           // this.feature=data.delete
 
@@ -153,11 +180,30 @@ export default {
           // console.log(this.recommend)
           // // this.loadModules = Array.from(data, value => value._id);
         })
-    }
+    },
+    handleScroll () {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      if(this.offsetTop==0){
+        this.offsetTop=document.querySelector('.tabs-warp').offsetTop-document.querySelector('.header').offsetHeight
+      }
+      if (scrollTop > this.offsetTop) {
+          this.searchBarFixed = true
+      } else {
+          this.searchBarFixed = false
+      }
+    },
+  },
+  mounted(){
+    this.isMounted=true
+    // 吸顶
+    window.addEventListener('scroll', this.handleScroll)
   },
   created(){
     this.getHomeRecommendData()
-  }
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
 }
 </script>
 
@@ -169,20 +215,59 @@ export default {
   overflow-y: scroll;
 }
 
+.isFixed{
+ position:fixed;
+ background-color:#Fff;
+ top:.9rem;
+ z-index:999;
+}
+.replace-tab{
+  widows: 100%;
+  height: 1rem;
+}
 .home{
   margin-top: .9rem;
+  .home-swiper{
+    margin:0 auto;
+    width: 6.97rem;
+    height: 2.84rem;
+    .swiper-container{
+      width: 100%;
+      height: 100%;
+      padding:0;
+      .swiper-wrapper{
+        width: 100%;
+        height: 100%;
+        .swiper-slide{
+          width: 100%;
+          height: 100%;
+          img{
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+
+
+  }
 }
+
 /*菜单*/
 .tabs-warp{
   text-align: center;
-  height: 42px;/*高度比tabs-content小, 目的是隐藏tabs的水平滚动条*/
+  height: .84rem;/*高度比tabs-content小, 目的是隐藏tabs的水平滚动条*/
   overflow-y: hidden;
   border-bottom: 1px solid #eee;
   box-sizing: content-box;
 }
+.tab{
+  width: 1.6rem;
+}
 .tabs-warp .tabs-content{
   width: 100%;
-  height: 50px;
+  height: 1rem;
   overflow-x: auto;
 }
 .tabs-warp .tabs-content .tabs{
@@ -191,8 +276,8 @@ export default {
 }
 .tabs-warp .tabs-content .tabs li{
   display: inline-block;
-  height: 40px;
-  line-height: 45px;
+  height: .8rem;
+  line-height: .9rem;
   vertical-align: middle;
 }
 .tabs-warp .tabs-content .tabs .active{
@@ -204,13 +289,10 @@ export default {
   height: 2px;
   background-color: #FF6990;
   transition: left 300ms;
+  width: .8rem;
 }
 /*列表*/
 .swiper-container{
-  position: fixed;
-  top: 130px;
-  left: 0;
-  right: 0;
-  bottom:70px;
+  padding-bottom:2rem;
 }
 </style>

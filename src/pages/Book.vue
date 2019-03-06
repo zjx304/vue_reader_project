@@ -1,6 +1,6 @@
 <template>
   <section class="book"> 
-    <v-header></v-header>
+    <v-header :title="title" :type="type"></v-header>
     <v-book-info></v-book-info>
     <v-comment></v-comment>
     <v-recommend></v-recommend>
@@ -23,6 +23,12 @@ export default {
     'v-recommend':Recommend,
     'v-book-bar':BookBar,
     'v-header':Header
+  },
+  data(){
+    return{
+      title:'书籍详情',
+      type:'type-three'
+    }
   },
   computed:{
     ...mapState([

@@ -1,14 +1,12 @@
 <template>
   <section class="search">
     <div class="header">
-      <span @click="$router.go(-1)">back</span>
-      <div class="search-box">
-        <div class="search-input">
-          <input type="text" placeholder="热门推荐" ref="search_input">
-          <span class="search-clear" @click="clearInput()">X</span>
-        </div>
-        <span @click="searchWord()">搜索</span>
+      <div @click="$router.go(-1)">back</div>
+      <div class="search-input">
+        <input type="text" placeholder="热门推荐" ref="search_input">
+        <span class="search-clear" @click="clearInput()">X</span>
       </div>
+      <div class="search-btn" @click="searchWord()">搜索</div>
     </div>
     <v-book-list :book-list="search_books" v-if="search_books.length>0"></v-book-list>
     <div class="search-info" v-else>
@@ -21,8 +19,10 @@
         </ul>
       </div>
       <div class="search-history" v-if="search_history">
-        <h4>历史搜索</h4>
-        <span @click="clearSearchHistory()">删除历史记录</span>
+        <div class="search-history-header">
+          <h4>历史搜索</h4>
+          <span @click="clearSearchHistory()">删除历史记录</span>
+        </div>
         <ul>
           <li v-for="(word,index) in search_history" :key="index">
             <span @click="searchWord(word)">{{word}}</span>
@@ -99,5 +99,77 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.search{
+  .header{
+    width: 100%;
+    height: .9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 .34rem;
+    box-sizing: border-box;
+    .search-input{
+      position: relative;
+      background: #E9EAEC;
+      border-radius: .34rem;
+      color: #CACBCD;      
+      
+      position: relative;
+      input{
+        display: block;
+        width: 5.04rem;
+        height: .69rem;
+        background: transparent;
+        border:none;
+        font-size: .25rem;
+        text-indent: .3rem;
+        line-height: .69rem;
+        outline: none;
+        border:none;
+      }
+      .search-clear{
+        position: absolute;
+        right: 0;
+        top:50%;
+        transform: translateY(-50%);
+      }
+    }
+    .search-btn{
 
+    }
+  }
+  .search-info{
+    margin:0 auto;
+    width: 6.83rem;
+    .search-hot{
+      border-top: 1px solid #CACBCD; 
+      padding-top: .44rem;  
+      ul{
+        li{
+          display: inline-block;
+          padding:0 .29rem;
+          margin:.15rem;
+          height: .54rem;
+          line-height: .54rem;
+          border-radius: .27rem;
+          border: 1px solid #CACBCD; 
+
+        }
+      }
+    }
+    .search-history{
+      padding-top: .44rem;  
+      .search-history-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      ul{
+        li{
+          display: flex;
+        }
+      }
+    }
+  }
+}
 </style>
