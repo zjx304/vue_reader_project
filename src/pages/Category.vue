@@ -26,7 +26,9 @@
                       <span>{{item.bookCount}}本</span>
                     </div>
                     <div class="item-right">
-                      <img src="https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=4074753802,623983736&fm=58" alt="">
+                      <img class="pic1" :src="staticPath+item.bookCover[0]" alt="">
+                      <img class="pic2" :src="staticPath+item.bookCover[1]" alt="">
+                      <img class="pic3" :src="staticPath+item.bookCover[2]" alt="">
                     </div>
                   </router-link>
                 </li>
@@ -45,6 +47,7 @@ import Header from 'components/common/Header'
 import TabBar from '../components/common/TabBar'
 import BScroll from 'better-scroll'
 import {mapState} from 'vuex'
+import {staticPath} from '../assets/js/storage_function'
 export default {
   name:'category',
   components:{
@@ -65,7 +68,8 @@ export default {
         female:'女生',
         picture:'漫画',
         press:'出版'
-      }
+      },
+      staticPath:staticPath
     }
   },
   computed: {
@@ -177,14 +181,12 @@ export default {
   bottom: 1.2rem;
   overflow: hidden;
   .menu-wrapper{
-    // background: #e0e0e0;
-    background:#fafafa;
+    // background:#fafafa;
     flex:0 0 1.28rem;
     .menu-item{
       width: 100%;
-      // height: .9rem;
       position: relative;
-      background:#fafafa;
+      // background:#fafafa;
       color: #666;
       @include fj(center);
       .menu-item-text{
@@ -222,6 +224,7 @@ export default {
     margin-bottom: 4rem;
     ul{
       .categorys-title{
+        width: 5.9rem;
         @include fj();
         align-items: center;
         flex-direction: row;
@@ -254,11 +257,13 @@ export default {
             display: flex;
             justify-content: space-between;
             .item-left{
-              margin-left: .22rem;
+              margin-left: .29rem;
               &>span:first-child{
+                margin-top: .2rem;
                 display: block;
                 font-size: .25rem;
-                color: #616166;
+                // color: #616166;
+                color: #333;
               }
               &>span:last-child{
                 display: block;
@@ -271,9 +276,34 @@ export default {
           .item-right{
             margin-top: .17rem;
             margin-right: .12rem;
-            img{
-              width: 1rem;
-              height: 1rem;
+            width: 1rem;
+            height: 1rem;
+            position: relative;
+            .pic1{
+              position: absolute;
+              width: .7rem;
+              height: .95rem;
+              z-index: 3;
+              bottom:0;
+              left: 50%;
+              transform: translateX(-50%);
+            }
+            .pic2{
+              position: absolute;
+              left: 0;
+              bottom:0;
+              width: .5rem;
+              height: .67rem; 
+              z-index: 2;
+            }
+            .pic3{
+              position: absolute;
+              right:0;
+              bottom:0;
+              width: .3rem;
+              height: .4rem; 
+              z-index: 1;
+
             }
           }
         }

@@ -5,7 +5,7 @@
         <router-link :to="{name:'Book',params:{id:book._id}}">
           <div class="book-list-box">
             <div class="book-list-left">
-              <img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=1642072250,2261007888&fm=58" alt="">
+              <img :src="staticPath+book.cover" alt="">
             </div>
             <div class="book-list-right">
               <h3 class="book-name" >{{book.title}}</h3>
@@ -29,6 +29,7 @@
 
 <script>
 import http from '@/http/api'
+import {staticPath} from '../../assets/js/storage_function.js';
 export default {
   name:'booklist',
   props: {
@@ -36,7 +37,7 @@ export default {
   },
   data(){
     return{
-
+      staticPath:staticPath
     }
   },
   created(){
@@ -56,23 +57,25 @@ export default {
 .book-list-content{
   li{
     .book-list-box{
+      // width: 5.94rem;
+      width: 100%;
       box-sizing: border-box;
-      height: 2.36rem;
       display: flex;
       justify-content: space-between;
       overflow: hidden;
-      padding:0 .25rem;
-      padding-top: .3rem;
+      padding:.15rem .25rem;
       .book-list-left{
-        width: 1.46rem;
-        height: 2.1rem;
+        // width: 1.16rem;
+        flex:0 0 1.16rem;
+        height: 1.69rem;
         img{
           width: 100%;
           height: 100%;
         }
       }
       .book-list-right{
-        width: 5.23rem;
+        flex:1;
+        padding-left: .15rem;
         text-align: left;
         .book-name{
           color: #333;
@@ -87,11 +90,13 @@ export default {
           -webkit-line-clamp: 2; 
           -webkit-box-orient: vertical; 
           -webkit-line-clamp:2; 
+          font-size: .25rem;
         }
         .book-info{
           color: #969ba3;
           display: flex;
           justify-content: space-between;
+          font-size: .2rem;
         }
       }
     }

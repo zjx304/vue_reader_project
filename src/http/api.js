@@ -22,6 +22,7 @@ export default {
 	},
 
 	getCategory() {
+    // return http('https://novel.juhe.im/categories')
 		return http(apiUrl + '/cats/lv2/statistics');
 	},
 

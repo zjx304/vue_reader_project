@@ -142,7 +142,6 @@ export default {
   .rank-tab-list{
     flex:0 0 1.48rem;
     li{
-      // height: 1.06rem;
       height: .55rem;
       width: 100%;
       position: relative;
@@ -158,10 +157,14 @@ export default {
     }
   }
   .rank-book-list{
-    height: 10rem;
+    // flex:1;
+    position: fixed;
+    width: 5.625rem;
+    top:1.64rem;
+    right: 0;
+    bottom:1.2rem;
     overflow-y: scroll;
   }
 }
-
 </style>
 

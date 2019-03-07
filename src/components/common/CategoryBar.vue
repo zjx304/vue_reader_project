@@ -1,10 +1,13 @@
 <template>
   <section class="category-bar">
+    <div class="category-filter">
+      <div class="filter" @click="filter_show=!filter_show;type_show=false;">筛选</div>
+      <div class="type" @click="type_show=!type_show;filter_show=false">类型</div>
+    </div>
     <div class="category-filter-type">
-      <div class="filter" @click="filter_show=!filter_show">筛选</div>
       <transition name="filter">
-        <ul v-show="filter_show">
-          <li v-for="(type,index) in typeList" :class="['cat-filter-item', { active: type.value === selectedType }]" :data-value="type.value"
+        <ul class="filter-list" v-show="filter_show">
+          <li class="filter-list-item" v-for="(type,index) in typeList" :class="['cat-filter-item', { active: type.value === selectedType }]" :data-value="type.value"
           :data-name="type.name" :key="index" @click="filterChange(type.value)">
           {{ type.name }}
           </li>
@@ -12,10 +15,9 @@
       </transition>
     </div>
     <div class="category-filter-major">
-      <div class="type" @click="type_show=!type_show">类型</div>
       <transition name="type">
-        <ul class="cat-fliter-list" ref="minorList" v-show="type_show">
-          <li v-for="(minor,index2) in minorList" :class="['cat-filter-item', { active: minor === selectedMinor }]" :data-value="minor"
+        <ul class="type-list" ref="minorList" v-show="type_show">
+          <li class="type-list-item" v-for="(minor,index2) in minorList" :class="['cat-filter-item', { active: minor === selectedMinor }]" :data-value="minor"
             :key="index2">
             {{ minor }}
           </li>
@@ -92,8 +94,17 @@ export default {
 
 <style lang="scss" scoped>
 .category-bar{
-  display: flex;
-  justify-content: space-between;
+  .category-filter{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    height: .9rem;
+  }
+  .category-filter-type{
+    
+  }
 }
+
+
 </style>
 

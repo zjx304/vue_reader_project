@@ -1,6 +1,5 @@
 <template>
   <section class="shelf-list">
-    <div>书架列表</div>
     <ul>
       <li v-for="shelf_item in shelfList" :key="shelf_item._id">
         <router-link :to="{ name: 'Read', params: { id: shelf_item.id }}">
@@ -14,7 +13,7 @@
           </div>
           <!-- 在router-link内要想使用点击事件 需要 在里面 .stop.prevent-->
           <!-- 若是想要在router-link 所在标签上添加点击事件 需要 .native -->
-          <div class="delete" @click.stop.prevent="showDialog(shelf_item.id)">删除</div>
+          <div class="delete" @click.stop.prevent="showDialog(shelf_item.id)"><i class="iconfont icon-shanchu"></i></div>
         </router-link>
       </li>
     </ul>
@@ -48,9 +47,13 @@ export default {
       'deleteFromShelft'
     ]),
     showDialog(book_id){
-      MessageBox.confirm('确定要从书架中删除？', '温馨提示').then(action => { 
+      MessageBox({
+        title: '温馨提示',
+        message: '确定要从书架中删除？',
+        showCancelButton: true,
+        confirmButtonClass:'mint-confirm-btn'  //设置确定按钮样式
+      }).then(action => { 
        if (action == 'confirm') {     //确认的回调
-        console.log(1); 
         this.deleteFromShelft(book_id)
        }
        }).catch(err => { 
@@ -58,28 +61,79 @@ export default {
           console.log('取消');
         } 
        })
-  }
+
+      // MessageBox.confirm('确定要从书架中删除？', '温馨提示').then(action => { 
+      //  if (action == 'confirm') {     //确认的回调
+      //   this.deleteFromShelft(book_id)
+      //  }
+      //  }).catch(err => { 
+      //   if (err == 'cancel') {     //取消的回调
+      //     console.log('取消');
+      //   } 
+      //  })
+    }
   }
   
 }
 </script>
 
 <style lang="scss" scoped>
+
+// 弹出框 确认按钮颜色
+// .mint-confirm-btn{
+//   // color: #a70a0a !important;
+//   color: red !important;
+// }
+
+.delete{
+  font-size: .2rem;
+  display: flex;
+  align-items: center;
+  .iconfont{
+    color: #33373d;
+  }
+}
+
 .shelf-list{
   ul{
     li{
+      margin:0 auto;
+      box-sizing: border-box;
+      padding:.2rem 0;
+      border-bottom: 1px solid #ebebeb;
+      width: 6.92rem;
       a{
         width: 100%;
-        box-sizing: border-box;
-        padding:0 .29rem;
+        // box-sizing: border-box;
         display: flex;
         justify-content: space-between;
         .avatar{
-          width: 1.4rem;
-          height: 2rem;
+          // width: 1.4rem;
+          // height: 2rem;
+          width: .94rem;
+          height: 1.32rem;
           img{
             width: 100%;
             height: 100%;
+          }
+        }
+        .book-info{
+          width: 5rem;
+          h4{
+            font-size: .28rem;
+            font-weight: bold;
+            color: #000;
+          }
+          .author{
+            font-size: .24rem;
+            color: #33373d;
+          }
+          .last-chapter{
+            font-size: .24rem;
+            color: #33373d;
+            overflow: hidden;/*超出部分隐藏*/
+            white-space: nowrap;/*不换行*/
+            text-overflow:ellipsis;/*超出部分文字以...显示*/
           }
         }
       }

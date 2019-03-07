@@ -35,5 +35,10 @@ export default {
   width: 100%;
   height: 100%;
 }
+
+// 弹出框 确认按钮颜色
+.mint-confirm-btn{
+  color: #a70a0a !important;
+}
 </style>
 
