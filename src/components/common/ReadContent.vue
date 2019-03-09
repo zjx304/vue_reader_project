@@ -21,8 +21,6 @@
         </div>
       </div>
     </div>
-    
-    <div class="read-tag">民国谍影</div>
     <h4 class="read-title">{{readContent[0].content_title}}</h4>
     <div class="read-touch" @click="showConfig()"></div>
     <ul >

@@ -1,9 +1,8 @@
 <template>
   <section class="categorylist">
     <v-header :title="title" :type="type"></v-header>
-    <!-- 头部 -->
     <!-- 过滤栏 -->
-    <div class="list">
+    <div class="list" id="dataList">
       <v-category-bar class="category-bar" :gender="filter.gender" :major="filter.major"></v-category-bar>
       <!-- 列表栏 -->
       <mescroll-vue ref="mescroll" :down="mescrollDown" :up="mescrollUp" @init="mescrollInit">
@@ -32,11 +31,25 @@ export default {
     ...mapState([
       'filter',
     ]),
+    // 由于watch 无法监听到对象中
+    filter_type_change(){
+      return this.filter.type
+    },
+    type_Change(){
+      return this.filter.minor
+    }
   },
   watch:{
-    filter(){
-      
-    }
+    filter_type_change(val){
+      // console.log('改变'+val)
+      // 重新加载mescroll
+      this.mescroll.resetUpScroll()
+    },
+    type_Change(val){
+      // console.log('改变'+val)
+      // 重新加载mescroll
+      this.mescroll.resetUpScroll()
+    },
   },
   data(){
     return{
@@ -60,13 +73,13 @@ export default {
 				noMoreSize: 5, //如果列表已无数据,可设置列表的总数量要大于5才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看这就是为什么无更多数据有时候不显示的原因
 				toTop: {
 					//回到顶部按钮
-					src: "./static/mescroll/mescroll-totop.png", //图片路径,默认null,支持网络图
+					src: require("assets/img/mescroll-totop.png"), //图片路径,默认null,支持网络图
 					offset: 1000 //列表滚动1000px才显示回到顶部按钮
 				},
 				empty: {
 					//列表第一页无任何数据时,显示的空提示布局; 需配置warpId才显示
-					// warpId: "xxid", //父布局的id (1.3.5版本支持传入dom元素)
-					icon: "./static/mescroll/mescroll-empty.png", //图标,默认null,支持网络图
+          warpId: "dataList", //父布局的id (1.3.5版本支持传入dom元素)
+					icon: require("assets/img/mescroll-empty.png"), //图标,默认null,支持网络图
 					tip: "暂无相关数据~" //提示
 				}
       }
@@ -125,6 +138,13 @@ export default {
 <style lang="scss" scoped>
 .list{
   margin-top: .9rem;
+}
+.category-bar{
+  position: fixed;
+  top:.9rem;
+  width: 100%;
+  height: .9rem;
+  z-index: 1;
 }
  .mescroll {
     position: fixed;

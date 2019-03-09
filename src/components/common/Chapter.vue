@@ -7,16 +7,16 @@
     <div class="chapter-head">
       <span class="chapter-total">共{{chapterName.length}}章</span>
       <span class="chapter-sort" @click="chapterSort()">
-        <span v-if="sort">倒序</span>
-        <span v-else>正序</span>
+        <span v-if="sort">倒序<i class="iconfont  icon-plus-select-up" :class="[sort?'reverse':'']"></i></span>
+        <span v-else>正序<i class="iconfont  icon-plus-select-up" ></i></span>
       </span>
     </div>
     <div class="chapter-list-section">
       <div class="chapter-top">正文卷</div>
       <ul class="chapter-list">
         <li class="chapter-list-item" v-for=" chapter in chapterName" :key="chapter.id" @click="selectChapter(chapter.id)">
-          <span>{{chapter.title}}</span>
-          <span v-if="chapter.isVip">vip</span>
+          <span :class="[{'gray':chapter.isVip}]" >{{chapter.title}}</span>
+          <span v-if="chapter.isVip"><i class="iconfont  icon-vip"></i></span>
         </li>
       </ul>
     </div>
@@ -50,6 +50,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+
+.icon-plus-select-up{
+  display: inline-block;
+}
+.reverse{
+   transform:rotate(180deg);
+}
+.gray{
+  color:gray;
+}
+.icon-vip{
+  color:gray;
+}
+
+
+
+
 .chapter-title{
   height: .8rem;
 }

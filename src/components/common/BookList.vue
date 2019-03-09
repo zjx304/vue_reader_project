@@ -13,7 +13,7 @@
                 {{book.shortIntro}}
               </div>
               <div class="book-info">
-                <div class="author">{{book.author}}</div>
+                <div class="author"><i class="iconfont icon-yonghu"></i>{{book.author}}</div>
                 <div class="label">
                   
                 </div>
@@ -40,8 +40,14 @@ export default {
       staticPath:staticPath
     }
   },
+  computed:{
+
+  },
+  mounted() {
+
+  },
   created(){
-    
+
   },
   watch: {
 
@@ -53,6 +59,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.iconfont{
+  font-size: .25rem;
+}
+.icon-yonghu{
+  padding-right: .1rem;
+}
+
 
 .book-list-content{
   li{

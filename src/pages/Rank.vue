@@ -10,7 +10,7 @@
       <mt-tab-container-item :id="item.en" v-for="(item,index) in top_tab_item" :key="index">
         <div class="rank-box">
           <ul class="rank-tab-list">
-            <li v-for="left_tab_item in leftTab(item.en)" :key="left_tab_item._id" @click="changeRankId(left_tab_item._id)">
+            <li v-for="left_tab_item in leftTab(item.en)" :key="left_tab_item._id" @click="changeRankId(left_tab_item._id)" :class="[left_tab_item._id==rank_book_id?'left_tab_active':'']">
               <span>{{left_tab_item.shortTitle}}</span>
             </li>
           </ul>
@@ -114,6 +114,11 @@ export default {
 .border-color{
   color:#f5f5f5;
 }
+
+.left_tab_active{
+  color: #ee4745;
+}
+
 .rank{
   margin-top: .9rem;
   position: relative;
