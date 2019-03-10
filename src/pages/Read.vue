@@ -1,7 +1,7 @@
 <template>
   <section class="read">
-    <v-read-content :read-content="read_content" @show-chapter="showChapter()"></v-read-content>
-    <v-chapter :chapter-name="chapter_name" :chapter-show="chapter_show" @select-chapter="selectChapterData"></v-chapter>
+    <v-read-content :read-content="read_content" @show-chapter="showChapter()" ></v-read-content>
+    <v-chapter :chapter-name="chapter_name" :chapter-show="chapter_show" @select-chapter="selectChapterData" @hide-chapter-emit="hideChater()"></v-chapter>
   </section>
 </template>
 
@@ -75,10 +75,18 @@ export default {
       this.getChapterData(chapter_id)
       this.chapter_show=false
     },
+    hideChater(){
+      // // 判断是否从book.vue进入目录
+			if(this.from_menu) {
+				this.$router.go(-1);
+			}
+			this.chapter_show = false;
+    }
   },
   created(){
     this.book_id=this.$route.params.id;
     this.getChapterName(this.book_id)
+    // 判断是否从书籍详情进来，显示目录
     if(this.$route.query.menu) {
 			this.from_menu = true;
 			this.chapter_show = true;

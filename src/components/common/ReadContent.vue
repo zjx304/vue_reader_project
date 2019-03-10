@@ -1,12 +1,21 @@
 <template>
   <section :class="['read-content',skin_color,{'night-color':night_mode}]" v-if="readContent.length>0" >
     <div class="config">
-      <div :class="['config-top','bg-black', { 'config-enter': show_config }]">顶部栏</div>
+      <div :class="['config-top','bg-black', { 'config-enter': show_config }]"><span @click="$router.go(-1);" ><i class="iconfont icon-fanhui"></i></span><span>标题</span><span></span></div>
       <div :class="['config-right','bg-black', { 'config-enter': show_config }]">加入书架</div>
       <div :class="['config-bottom','bg-black', { 'config-enter': show_config }]">
-        <div class="config-bootom-item" @click="showChapter()">目录</div>
-        <div class="config-bootom-item" @click="showNightMode()">夜间模式</div>
-        <div class="config-bootom-item" @click="showConfigPop()">设置</div>
+        <div class="config-bootom-item" @click="showChapter()"><div><i class="iconfont icon-sort"></i></div><div>目录</div></div>
+        <div class="config-bootom-item" @click="showNightMode()">  
+          <template v-if="!night_mode">
+            <div><i class="iconfont icon-moonbyueliang"></i></div>
+            <div>夜间模式</div>
+          </template>
+          <template v-else>
+            <div><i class="iconfont icon-rijianmoshi"></i></div>
+            <div>日间模式</div>
+          </template>
+        </div>
+        <div class="config-bootom-item" @click="showConfigPop()"><div><i class="iconfont icon-Aa"></i></div><div>设置</div></div>
       </div>
       <!-- 设置字体颜色弹出层 -->
       <div class='config-bootom-pop' v-show="show_config_pop">
@@ -147,6 +156,20 @@ export default {
     top:0;
     left:0;
     transform: translateY(-100%);
+    display: flex;
+    justify-content:space-between;
+  }
+  .config-top>span:nth-child(1){
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .config-top>span:nth-child(2){
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
   }
   .config-right{
     position: fixed;

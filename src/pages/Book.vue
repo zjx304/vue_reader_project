@@ -59,7 +59,7 @@ export default {
 <style lang="scss" scoped>
 .book{
   position: relative;
-  margin-top: .9rem;
+  margin-top: 1.4rem;
 }
 </style>
 

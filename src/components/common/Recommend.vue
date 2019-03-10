@@ -4,8 +4,8 @@
       <div class="recommend-title">本书追友还在读</div>
       <ul class="recommend-list">
         <li class="recomend-item" v-for="(recommend_list,index) in recommend_list" :key="index" v-if="index<4">
-          <img class="cover" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1527567554,3451379786&fm=27&gp=0.jpg" alt="">
-          <div class="book-name">{{recommend_list.title}}</div>
+          <img class="cover" :src="staticPath+recommend_list.cover" alt="">
+          <div class="book-name ellipsis">{{recommend_list.title}}</div>
           <div class="has-read">{{recommend_list.retentionRatio}}%读过</div>
         </li>
       </ul>
@@ -17,11 +17,13 @@
 <script>
 import http from '@/http/api'
 import {mapState} from 'vuex';
+import {staticPath} from '../../assets/js/storage_function';
 export default {
   name:'recommend',
   data(){
     return{
-      recommend_list:[]
+      recommend_list:[],
+      staticPath:staticPath
     }
   },
   computed:{
@@ -46,6 +48,12 @@ export default {
 <style lang="scss" scoped>
 .red{
   color:#ee4745;
+}
+
+.ellipsis{
+  overflow: hidden;/*超出部分隐藏*/
+  white-space: nowrap;/*不换行*/
+  text-overflow:ellipsis;/*超出部分文字以...显示*/
 }
 .recommend{
   box-sizing: border-box;

@@ -1,8 +1,8 @@
 <template>
   <section :class="['chapter',{'chapter-show':chapterShow}]">
     <div class="chapter-title">
-      <span @click="$router.go(-1)">返回</span>
-      <span class="book-name"></span>
+      <span class="back" @click="hideChapter()"><i class="iconfont icon-fanhui"></i></span>
+      <span class="book-name">{{current_book.title}}</span>
     </div>
     <div class="chapter-head">
       <span class="chapter-total">共{{chapterName.length}}章</span>
@@ -12,7 +12,7 @@
       </span>
     </div>
     <div class="chapter-list-section">
-      <div class="chapter-top">正文卷</div>
+      <div class="chapter-top"><i class="iconfont icon-jiantou_shangxiaqiehuan_o">正文卷</i></div>
       <ul class="chapter-list">
         <li class="chapter-list-item" v-for=" chapter in chapterName" :key="chapter.id" @click="selectChapter(chapter.id)">
           <span :class="[{'gray':chapter.isVip}]" >{{chapter.title}}</span>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import {mapState, mapMutations} from 'vuex';
 export default {
   name:'chapter',
   props: {
@@ -35,6 +36,11 @@ export default {
       sort:true
     }
   },
+  computed:{
+    ...mapState([
+			'current_book'
+    ]),
+  },
   methods:{
     // 排序
     chapterSort(){
@@ -44,6 +50,9 @@ export default {
     // 选择章节
     selectChapter(chapter_id){
       this.$emit('select-chapter', chapter_id);
+    },
+    hideChapter(){
+      this.$emit('hide-chapter-emit');
     }
   }
 }
@@ -66,10 +75,18 @@ export default {
 }
 
 
-
-
 .chapter-title{
-  height: .8rem;
+  height: .9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  .back{
+    position: absolute;
+    left: .25rem;
+    top:50%;
+    transform: translateY(-50%);
+  }
 }
 
 .chapter-show{

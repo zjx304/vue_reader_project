@@ -1,12 +1,12 @@
 <template>
   <section class="search">
     <div class="header">
-      <div @click="$router.go(-1)">back</div>
+      <div @click="$router.go(-1)"><i class="iconfont icon-fanhui"></i></div>
       <div class="search-input">
-        <input type="text" placeholder="热门推荐" ref="search_input">
-        <span class="search-clear" @click="clearInput()">X</span>
+        <input type="text" placeholder="斗罗大陆" ref="search_input">
+        <span class="search-clear" @click="clearInput()"><i class="iconfont icon-guanbi"></i></span>
       </div>
-      <div class="search-btn" @click="searchWord()">搜索</div>
+      <div class="search-btn red" @click="searchWord()">搜索</div>
     </div>
     <v-book-list :book-list="search_books" v-if="search_books.length>0"></v-book-list>
     <div class="search-info" v-else>
@@ -18,14 +18,14 @@
           </li>
         </ul>
       </div>
-      <div class="search-history" v-if="search_history">
+      <div class="search-history" v-if="search_history.length>0">
         <div class="search-history-header">
           <h4>历史搜索</h4>
-          <span @click="clearSearchHistory()">删除历史记录</span>
+          <span @click="clearSearchHistory()" class="gray" >删除历史<i class="iconfont icon-shanchu"></i></span>
         </div>
         <ul>
           <li v-for="(word,index) in search_history" :key="index">
-            <span @click="searchWord(word)">{{word}}</span>
+            <span @click="searchWord(word)" class="gray"><i class="iconfont icon-lishi"></i>{{word}}</span>
           </li>
         </ul>
       </div>
@@ -90,15 +90,29 @@ export default {
     clearSearchHistory(){
       // 清除localstorage的搜索记录
       this.deleteSearchHistory()
+
     }
   },
   created(){
     this.getHotWord()
   },
+  mounted(){
+    this.$nextTick(function(){
+      this.$refs.search_input.focus()
+    }) 
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+
+.red{
+  color:#d72321;
+}
+.gray{
+  color: #9c9ca4 !important;
+}
+
 .search{
   .header{
     width: 100%;
@@ -129,9 +143,15 @@ export default {
       }
       .search-clear{
         position: absolute;
-        right: 0;
+        right: .1rem;
         top:50%;
         transform: translateY(-50%);
+        font-size: .4rem;
+        width: .4rem;
+        height: .4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
     .search-btn{
@@ -143,7 +163,11 @@ export default {
     width: 6.83rem;
     .search-hot{
       border-top: 1px solid #CACBCD; 
-      padding-top: .44rem;  
+      // padding-top: .44rem;  
+      h4{
+        height: 1rem;
+        line-height: 1rem;
+      }
       ul{
         li{
           display: inline-block;
@@ -158,15 +182,25 @@ export default {
       }
     }
     .search-history{
-      padding-top: .44rem;  
+      // padding-top: .44rem;  
       .search-history-header{
         display: flex;
         justify-content: space-between;
         align-items: center;
+        h4{
+          height: 1rem;
+          line-height: 1rem;
+        }
+        .icon-shanchu{
+          padding-left: .1rem;
+        }
       }
       ul{
         li{
           display: flex;
+          .icon-lishi{
+            padding-right: .1rem;
+          }
         }
       }
     }
