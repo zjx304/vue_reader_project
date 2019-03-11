@@ -9,14 +9,18 @@
           <div class="has-read">{{recommend_list.retentionRatio}}%读过</div>
         </li>
       </ul>
-      <div class="show-more red">查看更多</div>
+      <div class="show-more">
+        <router-link :to="{ name: 'List', params: {id :current_book.id} }" class="red">
+          <span>查看更多</span>
+        </router-link>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
 import http from '@/http/api'
-import {mapState} from 'vuex';
+import {mapState,mapMutations} from 'vuex';
 import {staticPath} from '../../assets/js/storage_function';
 export default {
   name:'recommend',
@@ -32,7 +36,9 @@ export default {
     ])    
   },
   methods:{
-
+    ...mapMutations([
+      'saveListType'
+    ]),
   },
   created(){
     // 限制4条
@@ -41,6 +47,7 @@ export default {
           this.recommend_list = data;
           // console.log(this.recommend_list )
       })
+    this.saveListType('book')
   }
 }
 </script>

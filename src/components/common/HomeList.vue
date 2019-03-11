@@ -2,9 +2,9 @@
   <section class="home-list">
     <div class="home-title">
       <span>{{channel.title}}</span>
-      <!-- <router-link :to="{ name: 'List', params: {id :channel._id} }" class="red">
+      <router-link :to="{ name: 'List', params: {id :channel._id} }" class="red">
         <span>查看更多</span>
-      </router-link> -->
+      </router-link>
     </div>
     <ul v-if="book_list">
       <li v-for="(book_item,index) in book_list" :key="index">
@@ -31,6 +31,7 @@
 
 <script>
 import http from '@/http/api'
+import {mapState,mapMutations} from 'vuex';
 export default {
   name:'home-list',
   props:{
@@ -42,6 +43,9 @@ export default {
     }
   },
   methods:{
+    ...mapMutations([
+      'saveListType'
+    ]),
     getHomeListData(){
 			http.getBooks(this.channel._id)
 				.then(data => {
@@ -51,6 +55,7 @@ export default {
   },
   created(){
     this.getHomeListData()
+    this.saveListType('home')
   }
 }
 </script>

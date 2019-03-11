@@ -5,7 +5,7 @@
         <router-link :to="{name:'Book',params:{id:book._id}}">
           <div class="book-list-box">
             <div class="book-list-left">
-              <img :src="staticPath+book.cover" alt="">
+              <img :src="book.cover|setCover" alt="">
             </div>
             <div class="book-list-right">
               <h3 class="book-name" >{{book.title}}</h3>
@@ -38,6 +38,14 @@ export default {
   data(){
     return{
       staticPath:staticPath
+    }
+  },
+  filters:{
+    setCover(cover) {
+        if(cover.indexOf(staticPath) > -1) {
+            return cover;
+        }
+        return staticPath + cover;
     }
   },
   computed:{

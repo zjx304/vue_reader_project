@@ -7,7 +7,8 @@ const state = {
   },
   current_book:null,    //当前查看书籍对象
   shelf_book_list:[],   //书架列表
-  search_history:[]      //搜索历史
+  search_history:[],      //搜索历史
+  list_type:null
 }
 
 export default state;

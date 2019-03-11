@@ -62,6 +62,9 @@ const mutations = {
   deleteSearchHistory(state){
     state.search_history.splice(0, state.search_history.length);
     removeStore('SEARCH_HISTORY');
+  },
+  saveListType(state,type){
+    state.list_type=type
   }
 }
 
