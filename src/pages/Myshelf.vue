@@ -3,15 +3,17 @@
     <div class="header">
       <div class="left">追书神器</div>  
       <div class="right">
-        <span class="history iconfont icon-lishi" @click="showHistory()"></span>
+        <!-- <span class="history iconfont icon-lishi" @click="showHistory()"></span> -->
         <span class="search iconfont icon-sousuo" @click="showSearch()"></span>
       </div>
     </div>	
-    <v-shelf-list :shelf-list="shelf_book_list" v-if="shelf_book_list.length>0"></v-shelf-list>
-    <div class="without-book" v-else>
-      <img src="../assets/img/without_shelf.png" alt="">
-      <p>比撸猫更重要的，只有看书了……</p>
-      <router-link :to="{name:'Home'}">添加书籍</router-link>
+    <div class="shelf-box">
+      <v-shelf-list :shelf-list="shelf_book_list" v-if="shelf_book_list.length>0"></v-shelf-list>
+      <div class="without-book" v-else>
+        <img src="../assets/img/without_shelf.png" alt="">
+        <p>比撸猫更重要的，只有看书了……</p>
+        <router-link :to="{name:'Home'}">添加书籍</router-link>
+      </div>
     </div>
     <v-tab-bar></v-tab-bar>
   </section>
@@ -73,10 +75,23 @@ export default {
     .search{
       margin-left: .3rem;
     }
+    .iconfont{
+      font-size: .28rem;
+    }
   }
 }
 .my-shelf{
   margin-top: .9rem;
+}
+.shelf-box{
+  position: fixed;
+  top:.9rem;
+  bottom: 1.2rem;
+  width: 100%;
+  overflow-y: scroll;
+}
+.shelf-list{
+
 }
 .without-book{
   position: absolute;

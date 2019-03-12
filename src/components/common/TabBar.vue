@@ -84,6 +84,9 @@ export default {
         .tab-bar-item{
           color: #A3A3A3;
         }
+        span{
+          font-size: .28rem;
+        }
       }
 
     }

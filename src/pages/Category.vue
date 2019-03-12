@@ -145,7 +145,6 @@ export default {
           delete data.ok
           // 把数据保存到vuex state
           this.category_data=data
-          console.log(data)
           this.$nextTick(() =>{
               //左右两边滚动
               this. _initBScroll();

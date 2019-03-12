@@ -108,7 +108,7 @@ export default {
 
 <style lang="scss" scoped>
 .active{
-  color:red;
+  color: #ef4f4d;
 }
 
 
@@ -133,8 +133,8 @@ export default {
   width: 1.2rem;
 }
 .reverse{
-  color:red;
-  background: pink;
+  color: #ef4f4d;
+  background: #fdecec;
   .icon-plus-select-up{
     // display: inline-block; 注意行内元素不能旋转，需要转为行内块元素
     transform:rotate(180deg);

@@ -2,10 +2,6 @@
 
 import {setStore,getStore,removeStore} from '../assets/js/storage_function';
 const mutations = {
-  // shareCoin(state){
-  //   // const url = '/coin/addCoin';
-  //   // http.sendAjax(url, {coin_name:'share_sns',way_name: '分享论坛'});
-  // },
   // 从localsorage取出保存的数据初始
   getStorageInitData(state,book){
     let shelf_book_list=getStore('SHEFL_BOOK_LIST')
@@ -16,6 +12,10 @@ const mutations = {
     if(search_history){
       state.search_history=JSON.parse(search_history)
     }
+    state.night_mode = getStore('NIGHT_MODE') === 'true' ? true : false;
+    // Number.isInteger(value) 判断数是否整数
+    state.font_size=Number.isInteger(getStore('FONT_SIZE'))?parseInt(getStore('FONT_SIZE')):14
+		state.skin_color = getStore('SKIN_COLOR');
   },
   // 当前查看书籍信息
   setCurrentBookInfo(state,book){
@@ -62,6 +62,30 @@ const mutations = {
   deleteSearchHistory(state){
     state.search_history.splice(0, state.search_history.length);
     removeStore('SEARCH_HISTORY');
+  },
+  // 保存查看更多列表页类型和标题
+  saveListType(state,type){
+    state.list_type=type
+  },
+  // 保存阅读历史记录
+  saveReadHistory(state,book){
+    state.read_history.push(book)
+    setStore('READ_HISTORY', state.read_history);
+  },
+  // 保存日间和夜间模式
+  saveNightMode(state,night_mode){
+    state.night_mode=night_mode
+    setStore('NIGHT_MODE', state.night_mode);
+  },
+  // 保存皮肤颜色
+  saveSkinColor(state,skin_color){
+    state.skin_color=skin_color
+    setStore('SKIN_COLOR', state.skin_color);
+  },
+  // 保存默认色号
+  saveFontSize(state,font_size){
+    state.font_size=font_size
+    setStore('FONT_SIZE', state.font_size);
   }
 }
 

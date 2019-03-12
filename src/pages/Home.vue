@@ -4,7 +4,7 @@
     <div class="home-swiper">
       <swiper :options="swiperHomeOption">
         <swiper-slide v-for="swiper_item in swiper_img" :key="swiper_item._id">
-          <router-link :to="{ name: 'Book', params: { id: swiper_item._id }}">
+          <router-link :to="{ name: 'Book', params: { id: swiper_item.link }}">
             <img :src="swiper_item.img" alt="">
           </router-link>
         </swiper-slide>
@@ -27,31 +27,31 @@
       <swiper-slide>
         <!-- 精选 -->
         <div v-for="(feature_item,index) in feature_channel" :key="index">
-          <v-home-list :channel="feature_item"></v-home-list>
+          <v-home-list  :channel="feature_item"></v-home-list>
         </div>
       </swiper-slide>
       <swiper-slide>
         <!-- 男频 -->
         <div v-for="(male_item,index) in male_channel" :key="index">
-          <v-home-list :channel="male_item"></v-home-list>
+          <v-home-list  :channel="male_item"></v-home-list>
         </div>
       </swiper-slide>
       <swiper-slide>
         <!-- 女频 -->
         <div v-for="(female_item,index) in female_channel" :key="index">
-          <v-home-list :channel="female_item"></v-home-list>
+          <v-home-list  :channel="female_item"></v-home-list>
         </div>
       </swiper-slide>
       <swiper-slide>
         <!-- 限免 -->
         <div v-for="(free_item,index) in free_channel" :key="index">
-          <v-home-list :channel="free_item"></v-home-list>
+          <v-home-list  :channel="free_item"></v-home-list>
         </div>
       </swiper-slide>
       <swiper-slide>
         <!-- 出版 -->
         <div v-for="(publish_item,index) in publish_channel" :key="index">
-          <v-home-list :channel="publish_item"></v-home-list>
+          <v-home-list  :channel="publish_item"></v-home-list>
         </div>
       </swiper-slide>
     </swiper>
@@ -95,6 +95,11 @@ export default {
         }
       },
       swiperHomeOption:{
+        autoplay:true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable :true,
+        },
         // autoplay,
         // loop:true
       },
@@ -166,14 +171,6 @@ export default {
           this.publish_channel=data.filter(function(item){
               return item.type !=1&&item.order>=7; 
           })
-          // this.feature=data.delete
-					// let sexOrder = this.sex === 'male' ? [2, 5, 7, 9] : [1, 4, 6, 8];
-					// data = data.filter((obj) => {
-					// 	return sexOrder.includes(obj.order) && obj.type === 0;
-					// });
-          // this.recommend = data;
-          // console.log(this.recommend)
-          // // this.loadModules = Array.from(data, value => value._id);
         })
     },
     handleScroll () {
@@ -231,6 +228,7 @@ export default {
 .home{
   margin-top: .9rem;
   .home-swiper{
+    position: relative;
     margin:0 auto;
     width: 6.97rem;
     height: 2.84rem;
@@ -238,6 +236,7 @@ export default {
     .swiper-container{
       width: 100%;
       height: 100%;
+      padding:0;
       .swiper-wrapper{
         width: 100%;
         height: 100%;
@@ -252,11 +251,22 @@ export default {
         }
       }
     }
-
-
-
+    .swiper-pagination{
+      position: absolute;
+      bottom:.2rem;
+      right:.2rem;
+    }
   }
 }
+.home /deep/ .swiper-pagination-bullet{
+  margin:0 .08rem;
+  width: .16rem;
+  height: .16rem;
+}
+.home /deep/ .swiper-pagination-bullet-active{
+  background: #a70a0a;
+}
+ 
 
 /*菜单*/
 .tabs-warp{
@@ -268,6 +278,7 @@ export default {
 }
 .tab{
   width: 1.6rem;
+  font-size: .29rem;
 }
 .tabs-warp .tabs-content{
   width: 100%;
@@ -299,5 +310,11 @@ export default {
 /*列表*/
 .swiper-container{
   padding-bottom:1.2rem;
+}
+.swiper-slide>div{
+  border-bottom: .13rem solid #f4f4f4;
+}
+.swiper-slide>div:last-child{
+  border-bottom:none;
 }
 </style>

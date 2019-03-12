@@ -62,15 +62,6 @@ export default {
         } 
        })
 
-      // MessageBox.confirm('确定要从书架中删除？', '温馨提示').then(action => { 
-      //  if (action == 'confirm') {     //确认的回调
-      //   this.deleteFromShelft(book_id)
-      //  }
-      //  }).catch(err => { 
-      //   if (err == 'cancel') {     //取消的回调
-      //     console.log('取消');
-      //   } 
-      //  })
     }
   }
   
@@ -79,11 +70,6 @@ export default {
 
 <style lang="scss" scoped>
 
-// 弹出框 确认按钮颜色
-// .mint-confirm-btn{
-//   // color: #a70a0a !important;
-//   color: red !important;
-// }
 
 .delete{
   font-size: .2rem;
@@ -91,6 +77,7 @@ export default {
   align-items: center;
   .iconfont{
     color: #33373d;
+    font-size: .3rem;
   }
 }
 
@@ -123,6 +110,21 @@ export default {
             font-size: .28rem;
             font-weight: bold;
             color: #000;
+            display: flex;
+            align-items: center;
+            .time{
+              margin-left: .1rem;
+              display: inline-block;
+              font-size: .15rem;
+              height: .25rem;
+              line-height: .25rem;
+              color: #949494;
+              border:1px solid #949494;
+              padding:0 .1rem;
+              border-radius: .125rem;
+              box-sizing: border-box;
+              font-weight:normal
+            }
           }
           .author{
             font-size: .24rem;

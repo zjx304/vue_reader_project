@@ -39,7 +39,7 @@ export default {
   },
   data () {
     return {
-      title:'排行',
+      title:'排行榜',
       type:'type-two',
       data:Object,
       selected:'male', //默认显示第一个选项卡的内容  需要和id绑定

@@ -1,18 +1,27 @@
 <template>
   <section :class="['read-content',skin_color,{'night-color':night_mode}]" v-if="readContent.length>0" >
     <div class="config">
-      <div :class="['config-top','bg-black', { 'config-enter': show_config }]">顶部栏</div>
-      <div :class="['config-right','bg-black', { 'config-enter': show_config }]">加入书架</div>
+      <div :class="['config-top','bg-black', { 'config-enter': show_config }]"><span @click="$router.go(-1);" ><i class="iconfont icon-fanhui"></i></span><span>{{current_book.title}}</span><span></span></div>
+      <div :class="['config-right','bg-black', { 'config-enter': show_config }]" @click="addShelft()"><span v-if="!is_add">加入书架</span><span v-else>已加入书架</span></div>
       <div :class="['config-bottom','bg-black', { 'config-enter': show_config }]">
-        <div class="config-bootom-item" @click="showChapter()">目录</div>
-        <div class="config-bootom-item" @click="showNightMode()">夜间模式</div>
-        <div class="config-bootom-item" @click="showConfigPop()">设置</div>
+        <div class="config-bootom-item" @click="showChapter()"><div><i class="iconfont icon-sort"></i></div><div>目录</div></div>
+        <div class="config-bootom-item" @click="showNightMode()">  
+          <template v-if="!night_mode">
+            <div><i class="iconfont icon-moonbyueliang"></i></div>
+            <div>夜间模式</div>
+          </template>
+          <template v-else>
+            <div><i class="iconfont icon-rijianmoshi"></i></div>
+            <div>日间模式</div>
+          </template>
+        </div>
+        <div class="config-bootom-item" @click="showConfigPop()"><div><i class="iconfont icon-Aa"></i></div><div>设置</div></div>
       </div>
       <!-- 设置字体颜色弹出层 -->
       <div class='config-bootom-pop' v-show="show_config_pop">
         <ul class="config-skin-color">
           <li class="color-item" v-for="(skin,index) in skin_list" :key="index">
-            <span :class="['color-round-btn',skin,{'skin_color_active':skin==skin_color}]" @click="changeSkinColor(skin)"></span>
+            <span :class="['color-round-btn',skin,{'skin_color_active':skin==skin_color}]" @click="changeSkinColor(skin)"><i v-if="skin==skin_color" class="iconfont icon-gou"></i></span>
           </li>
         </ul>
         <div class="config-control-fontsize">
@@ -21,19 +30,22 @@
         </div>
       </div>
     </div>
-    <h4 class="read-title">{{readContent[0].content_title}}</h4>
+
     <div class="read-touch" @click="showConfig()"></div>
-    <ul >
-      <li :style="{ fontSize: font_size + 'px' }" v-for="(item,index) in readContent[0].content_list" :key="index">
-        {{item}}
-      </li>
-    </ul>
-
-
+    <div class="content" v-for="(content,index) in readContent" :key="index">
+      <h4 class="read-title">{{content.content_title}}</h4>
+      <ul >
+        <li :style="{ fontSize: font_size + 'px' }" v-for="(item,index) in content.content_list" :key="index">
+          {{item}}
+        </li>
+      </ul>
+    </div>
+    <button class="next-chapter" @click="$emit('next-chapter')">加载下一章</button>
   </section>
 </template>
 
 <script>
+import {mapState,mapMutations} from 'vuex';
 export default {
   name:'readcontent',
   props:{
@@ -43,15 +55,29 @@ export default {
     return{
       show_config:false,     //设置弹出层
       show_config_pop:false,  //设置皮肤字体弹出层
-      skin_color:'',          //皮肤颜色
-      night_mode:false,       //夜晚模式
       skin_list:['skin-default', 'skin-blue', 'skin-green', 'skin-pink', 'skin-dark', 'skin-light'],
-      // skin_color_active:'',
-      font_size:14
+      is_add:false
 
     }
   },
+  computed:{
+    // 注意computed里的数据不能直接在method created 等改变
+    // 会报错 Computed property "skin_color" was assigned to but it has no setter.
+    ...mapState([
+      'current_book',
+      'night_mode',
+      'skin_color',
+      'font_size'
+    ])
+  },
   methods:{
+    ...mapMutations([
+      'addToShelft',
+      'setCurrentBookInfo',
+      'saveNightMode',
+      'saveSkinColor',
+      'saveFontSize'
+    ]),
     // 显示设置弹出层
     showConfig(){
       if(!this.show_config){
@@ -63,37 +89,46 @@ export default {
     },
     // 夜间模式
     showNightMode(){
-      this.skin_color=false
-      if(!this.night_mode){
-        this.night_mode=true
-      }else{
-        this.night_mode=false
-      }
+      this.saveNightMode(!this.night_mode)
     },
     // 显示弹出层皮肤和字体大小
     showConfigPop(){
       this.show_config_pop=true
     },
     changeSkinColor(skin){
-      this.night_mode=false
-      this.skin_color=skin
+      this.saveNightMode(false)
+      this.saveSkinColor(skin)
     },
     changeFontSize(isAdd){
-      console.log(this.font_size)
-      // if ((this.font_size >= 30 && isAdd) || (this.font_size <= 10 && !isAdd)) {
-      //     return;
-      // }
+      if ((this.font_size >= 30 && isAdd) || (this.font_size <= 10 && !isAdd)) {
+          return;
+      }
       let size = this.font_size;
       isAdd ? size++ : size--
-      this.font_size=size
-      // this.SET_FONT_SIZE(size);
+      this.saveFontSize(size);
     },
     // 显示章节 $emit触发父组件
     showChapter(){
       // this.show_config=false
       this.$emit('show-chapter');
-      
+    },
+    addShelft(){
+      if(is_add){
+        return
+      }
+      let book = this.current_book;
+      book.isInShelf = true;
+      this.isAdded = true;
+			this.setCurrentBookInfo(book);
+      this.addToShelft(this.current_book)
     }
+  },
+  created(){
+      this.is_add = this.current_book.isInShelf;
+      // 当没有设置皮肤颜色时，默认显示skin-default
+      if (!this.skin_list.includes(this.skin_color)) {
+          this.saveSkinColor('skin-default');
+      }
   }
 
 }
@@ -132,7 +167,7 @@ export default {
 
 
 .read-content{
-  padding:0 .2rem;
+  padding:.2rem .2rem;
   // 设置
   .bg-black{
     color: #fff;
@@ -147,6 +182,20 @@ export default {
     top:0;
     left:0;
     transform: translateY(-100%);
+    display: flex;
+    justify-content:space-between;
+  }
+  .config-top>span:nth-child(1){
+    position: absolute;
+    left: .25rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .config-top>span:nth-child(2){
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
   }
   .config-right{
     position: fixed;
@@ -204,6 +253,13 @@ export default {
           width: .68rem;
           height: .68rem;
           border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .icon-gou{
+            color:#ed424b;
+            font-size: .4rem;
+          }
         }
         .skin_color_active{
           border:1px solid#ed424b;
@@ -231,8 +287,6 @@ export default {
       }
     }
   }
-  //
-
   .read-tag{
     width: 100%;
     height: .8rem;
@@ -249,6 +303,24 @@ export default {
     left: 20%;
     z-index: 1000;
   }
+  .next-chapter{
+    display: block;
+    margin:0 auto;
+    width: 6rem;
+    height: .72rem;
+    border-radius: .36rem;
+    background-color: #ed424b;
+    font-size: .32rem;
+    line-height: .72rem;
+    color: #fff;
+    text-align: center;
+    border:none;
+    outline: none;
+    letter-spacing: .1rem;
+    text-indent: .1rem;
+
+  }
 }
+
 </style>
 

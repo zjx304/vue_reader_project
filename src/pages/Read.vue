@@ -1,7 +1,7 @@
 <template>
   <section class="read">
-    <v-read-content :read-content="read_content" @show-chapter="showChapter()"></v-read-content>
-    <v-chapter :chapter-name="chapter_name" :chapter-show="chapter_show" @select-chapter="selectChapterData"></v-chapter>
+    <v-read-content :read-content="read_content" @show-chapter="showChapter()" @next-chapter="nextChapter()"></v-read-content>
+    <v-chapter :chapter-name="chapter_name" :chapter-show="chapter_show" @select-chapter="selectChapterData" @hide-chapter-emit="hideChater()"></v-chapter>
   </section>
 </template>
 
@@ -33,18 +33,31 @@ export default {
     ])
   },
   watch:{
-    // 监听章节和阅读到第几章变化
+    // 监听选择的章节 
     chapter_name(){
+      // if(this.current_book.readChapter !== ''){
+      //   //遍历对象chapter_name 找出当前readChapter
+      //   for (let [index, chapter] of Object.entries(this.chapter_name)) {
+			// 		if (this.current_book.readChapter === chapter.id) {
+			// 			this.read_index = index;
+			// 			break;
+			// 		}
+			// 	}
+      // }
       this.getChapterData(this.chapter_name[this.read_index].id)
     },
-    read_index(){
-
-    }
+    // 历史记录中阅读到第几章节 无则从第一章开始
+    // read_index(){
+		// 	// let book = this.current_book;
+		// 	// book.readChapter = this.chapter_name[this.read_index].id;
+		// 	// this.setCurrentBookInfo(book);
+    // }
   },
   methods:{
     ...mapMutations([
       'setCurrentBookInfo',
-      'addToShelft'
+      'addToShelft',
+      'saveReadHistory'
     ]),
     // 获取所有章节名
     getChapterName(book_id){
@@ -61,7 +74,6 @@ export default {
 						content_title: data.title,
 						content_list: data.isVip ? ['vip章节，请到正版网站阅读'] : data.cpContent.split('\n')     //换行符分割文章
           });
-          var aa=data.cpContent.split('\n')
         })
     },
     // ReadContent组件传出的是否显示章节
@@ -70,20 +82,39 @@ export default {
     },
     selectChapterData(chapter_id){
       // 先清空原有书籍
-      // this.readContent.splice(0, this.readContent.length);
       this.read_content=[]
       this.getChapterData(chapter_id)
       this.chapter_show=false
+      // 保存阅读章节id
+      this.current_book.readChapter=chapter_id
+      // 保存current_book到localstorage
     },
+    hideChater(){
+      // // 判断是否从book.vue进入目录
+			if(this.from_menu) {
+				this.$router.go(-1);
+			}
+			this.chapter_show = false;
+    },
+    // 加载下一章
+    nextChapter(){
+      if (this.read_index === this.chapter_name.length - 1) {
+				return;
+			}
+      this.read_index++;
+      this.getChapterData(this.chapter_name[this.read_index].id);
+
+    }
   },
   created(){
     this.book_id=this.$route.params.id;
+
     this.getChapterName(this.book_id)
+    // 判断是否从书籍详情进来，显示目录
     if(this.$route.query.menu) {
 			this.from_menu = true;
 			this.chapter_show = true;
-  }
-
+    }
   },
   beforeRouteLeave(to, from, next) {
 		if (!this.current_book.isInShelf && !this.from_menu) {

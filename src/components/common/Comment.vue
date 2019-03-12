@@ -7,46 +7,98 @@
       <li v-for="(comment_item,index) in comment_list" :key="index">
         <div class="comment-man">
           <div>
-            <span class="avatar"><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1527567554,3451379786&fm=27&gp=0.jpg" alt=""></span>
+            <span class="avatar"><img :src="staticPath+comment_item.author.avatar" alt=""></span>
             <span class="name less-gray">{{comment_item.author.nickname}}</span>
             <span class="rank">Lv{{comment_item.author.lv}}</span>
           </div>
-          <div class="star">{{comment_item.rating}}</div>
+          <div class="star"><v-star :num="comment_item.rating" :sub=1></v-star></div>
         </div>
-        <p class="content">
+        <p class="content ellipsis">
           {{comment_item.content}}
         </p>
         <div class="comment-bottom">
-          <span class="time">{{comment_item.updated}}</span>
-          <span class="praise">{{comment_item.helpful.total}}</span>
+          <div class="time">{{comment_item.updated|time}}</div>
+          <div class="praise" @click="praise(comment_item._id)">
+            <template v-if="comment_item.state=='normal'">
+              <i class="iconfont icon-zan"></i>
+              {{comment_item.helpful.yes}}
+            </template>
+            <template v-else>
+              <i class="iconfont icon-zan red"></i>
+              {{comment_item.helpful.yes+1}}
+            </template>
+          </div>
         </div>
       </li>
     </ul>
-    <div class="show-more red">查看更多</div>
+    <!-- <div class="show-more red">查看更多</div> -->
   </section>
 </template>
 
 <script>
 import http from '@/http/api'
 import {mapState} from 'vuex';
+import moment from 'moment';
+import {staticPath} from '../../assets/js/storage_function';
+import Star from './Star'
 export default {
   name:'comment',
+  components:{
+    'v-star':Star
+  },
   computed:{
     ...mapState([
       'current_book'
-    ])
+    ]),
+
+  },
+  filters:{
+    time(updated) {
+			moment.locale('zh-cn');
+			return moment(updated).fromNow();
+		},
+    star(val){
+      const CLASS_ON = 'on'
+      const CLASS_HALF = 'half'
+      const CLASS_OFF = 'off'
+      var star=val
+      var star_arr = []
+      // 向star_arr添加CLASS_ON
+      var star_integer = Math.floor(star)
+      for (let i = 0; i < star_integer; i++) {
+        star_arr.push(CLASS_ON)
+      }
+      // 向star_arr添加CLASS_HALF
+      if(star-star_integer>=0.5) {
+        star_arr.push(CLASS_HALF)
+      }
+      // 向star_arr添加CLASS_OFF
+      while(star_arr.length<5) {
+        star_arr.push(CLASS_OFF)
+      }
+      return star_arr
+    }
   },
   data(){
     return{
-      comment_list:[]
+      comment_list:[],
+      staticPath:staticPath
     }
   },
   created(){
     http.getReview(this.current_book.id)
       .then(data => {
           this.comment_list=data
-          // console.log(data)
       })
+  },
+  methods:{
+    praise(id){
+      this.comment_list.forEach(function(val){
+        if(val._id==id){
+          val.state='unormal'
+        }
+      })
+    }
   }
 }
 </script>
@@ -61,6 +113,26 @@ export default {
 .red{
   color:#ee4745;
 }
+
+
+// 三行省略
+.ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp:4;
+  -webkit-box-orient: vertical;
+}
+
+
+
+
+
+
+
+
+
+
 .comment{
   padding: 0 .47rem;
   box-sizing: border-box;
@@ -117,6 +189,13 @@ export default {
         align-items: center;
         color: #cfcfcf;
         height: .8rem;
+        .praise{
+          padding-right: .1rem;
+          // flex:0 0 1.4rem;
+          .icon-zan{
+            padding-right: .1rem;
+          }
+        }
       }
     }
   }

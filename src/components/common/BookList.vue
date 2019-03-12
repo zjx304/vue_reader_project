@@ -1,21 +1,22 @@
 <template>
   <section class="book-list" >
     <ul class="book-list-content">
-      <li v-for="(book) in bookList" :key="book._id">
+      <li v-for="(book,index) in bookList" :key="index">
         <router-link :to="{name:'Book',params:{id:book._id}}">
           <div class="book-list-box">
             <div class="book-list-left">
-              <img :src="staticPath+book.cover" alt="">
+              <img :src="book.cover|setCover" alt="">
             </div>
             <div class="book-list-right">
-              <h3 class="book-name" >{{book.title}}</h3>
+              <h3 class="book-name" >{{index+1}}.{{book.title}}</h3>
               <div class="book-des">
                 {{book.shortIntro}}
               </div>
               <div class="book-info">
                 <div class="author"><i class="iconfont icon-yonghu"></i>{{book.author}}</div>
                 <div class="label">
-                  
+                  <span>{{book.majorCate}}</span>
+                  <span class="lately-follower">{{book.latelyFollower|count_change_one}}人气</span>
                 </div>
               </div>
             </div>
@@ -39,6 +40,17 @@ export default {
     return{
       staticPath:staticPath
     }
+  },
+  filters:{
+    setCover(cover) {
+        if(cover.indexOf(staticPath) > -1) {
+            return cover;
+        }
+        return staticPath + cover;
+    },
+    count_change_one(val){
+      return val > 10000 ? (val/ 10000).toFixed(1) + '万' : val;
+    },
   },
   computed:{
 
@@ -110,7 +122,30 @@ export default {
           color: #969ba3;
           display: flex;
           justify-content: space-between;
+          align-items: center;
           font-size: .2rem;
+          .author{
+            font-size: .24rem;
+          }
+          .label{
+            font-size: .17rem;
+            span{
+              display: inline-block;
+              font-size: .15rem;
+              color: #777;
+              text-align: center;
+              height: .3rem;
+              line-height: .3rem;
+              border-radius: .15rem;
+              background: #efeff4;
+              padding:0 .1rem;
+            }
+            .lately-follower{
+              margin-left: .1rem;
+              background: #fdecec;
+              color: #ef4f4d;
+            }
+          }
         }
       }
     }

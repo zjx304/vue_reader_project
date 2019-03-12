@@ -41,12 +41,10 @@ export default {
   },
   watch:{
     filter_type_change(val){
-      // console.log('改变'+val)
       // 重新加载mescroll
       this.mescroll.resetUpScroll()
     },
     type_Change(val){
-      // console.log('改变'+val)
       // 重新加载mescroll
       this.mescroll.resetUpScroll()
     },
