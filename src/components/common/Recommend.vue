@@ -98,6 +98,7 @@ export default {
       line-height: .9rem;
       text-align: center;
       border-top: 1px solid #ececec;
+      font-size: .28rem;
     }
   }
 }

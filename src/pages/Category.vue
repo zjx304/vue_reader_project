@@ -20,7 +20,7 @@
               </div>
               <ul class="categorys-items">
                 <li v-for="(item, index2) in val" :key="index2">
-                  <router-link :to="{ name: 'CategoryList', params: { major: item.name}, query: { gender:gender} }">
+                  <router-link :to="{ name: 'CategoryList', params: { major: item.name}, query: { gender:key} }">
                     <div class="item-left">
                       <span>{{item.name}}</span>
                       <span>{{item.bookCount}}本</span>
@@ -62,7 +62,6 @@ export default {
       scrollY: 0, //右侧列表滑动的y轴坐标
       rightLiTops:[], //所有分类头部位置
       category_data:[],
-      gender:'male',
       category_label:{
         male:'男生',
         female:'女生',
@@ -174,13 +173,14 @@ export default {
 }
 .category-box{
   display: flex;
-  position: absolute;
+  position: fixed;
   width: 100%;
   top:.9rem;
   bottom: 1.2rem;
   overflow: hidden;
   .menu-wrapper{
     // background:#fafafa;
+    font-size: .28rem;
     flex:0 0 1.28rem;
     .menu-item{
       width: 100%;
@@ -220,7 +220,7 @@ export default {
     flex:1;
     background: #fff;
     box-sizing: border-box;
-    margin-bottom: 4rem;
+    margin-bottom: 6rem;
     ul{
       .categorys-title{
         width: 5.9rem;

@@ -11,7 +11,7 @@
         <ul class="filter-list" v-show="filter_show">
           <li class="filter-list-item" v-for="(type,index) in typeList" :class="['cat-filter-item', { 'active': type.value === selectedType }]" :data-value="type.value"
           :data-name="type.name" :key="index" @click="filterChange(type)">
-          {{ type.name }}
+            <span>{{ type.name }}</span><i v-if="type.value === selectedType" class="iconfont icon-gou"></i>
           </li>
         </ul>
       </transition>
@@ -21,7 +21,7 @@
         <ul class="type-list" ref="minorList" v-show="type_show">
           <li class="type-list-item" v-for="(minor,index2) in minorList" :class="['cat-filter-item', { 'active': minor === selectedMinor }]" :data-value="minor"
             :key="index2" @click="typeChange(minor)">
-            {{ minor }}
+           <span>{{ minor }}</span><i></i><i v-if="minor === selectedMinor" class="iconfont icon-gou"></i>
           </li>
         </ul>
       </transition>
@@ -128,9 +128,17 @@ export default {
 }
 .filter{
   width: 1.5rem;
+  font-size: .3rem;
+  .icon-plus-select-up{
+    font-size: .3rem;
+  }
 }
 .type{
   width: 1.2rem;
+  font-size: .3rem;
+  .icon-plus-select-up{
+    font-size: .3rem;
+  }
 }
 .reverse{
   color: #ef4f4d;
@@ -176,7 +184,13 @@ export default {
       transition: transform 0.5s ease;
       border-bottom: 1px solid #EFEFF4;
       .filter-list-item{
-
+        font-size: .28rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .icon-gou{
+          font-size: .2rem;
+        }
       }
       &.filter-enter-active{
         transform: translateY(0);
@@ -204,7 +218,13 @@ export default {
       transition: transform 0.5s ease;
       border-bottom: 1px solid #EFEFF4;
       .type-list-item{
-
+        font-size: .28rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .icon-gou{
+          font-size: .2rem;
+        }
       }
       &.type-enter-active{
         transform: translateY(0);

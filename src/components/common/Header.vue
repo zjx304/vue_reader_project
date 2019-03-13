@@ -57,12 +57,20 @@ export default {
 .iconfont{
   font-size: .28rem;
 }
+.header /deep/ .mint-button-text{
+  font-size: .3rem;
+}
+.header /deep/ .mint-header-title{
+  font-size: .3rem;
+}
+.header /deep/ .mintui-back{
+  font-size: .3rem;
+}
 .header{
   position: fixed;
   top:0;
   width: 100%;
   height: .9rem;
-  background: #fff;
   background: #a70a0a;
   z-index: 10;
   .type-one{

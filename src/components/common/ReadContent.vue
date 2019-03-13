@@ -4,18 +4,18 @@
       <div :class="['config-top','bg-black', { 'config-enter': show_config }]"><span @click="$router.go(-1);" ><i class="iconfont icon-fanhui"></i></span><span>{{current_book.title}}</span><span></span></div>
       <div :class="['config-right','bg-black', { 'config-enter': show_config }]" @click="addShelft()"><span v-if="!is_add">加入书架</span><span v-else>已加入书架</span></div>
       <div :class="['config-bottom','bg-black', { 'config-enter': show_config }]">
-        <div class="config-bootom-item" @click="showChapter()"><div><i class="iconfont icon-sort"></i></div><div>目录</div></div>
+        <div class="config-bootom-item" @click="showChapter()"><i class="iconfont icon-sort"></i><span>目录</span></div>
         <div class="config-bootom-item" @click="showNightMode()">  
           <template v-if="!night_mode">
-            <div><i class="iconfont icon-moonbyueliang"></i></div>
-            <div>夜间模式</div>
+            <i class="iconfont icon-moonbyueliang"></i>
+            <span>夜间模式</span>
           </template>
           <template v-else>
-            <div><i class="iconfont icon-rijianmoshi"></i></div>
-            <div>日间模式</div>
+            <i class="iconfont icon-rijianmoshi"></i>
+            <span>日间模式</span>
           </template>
         </div>
-        <div class="config-bootom-item" @click="showConfigPop()"><div><i class="iconfont icon-Aa"></i></div><div>设置</div></div>
+        <div class="config-bootom-item" @click="showConfigPop()"><i class="iconfont icon-Aa"></i><span>设置</span></div>
       </div>
       <!-- 设置字体颜色弹出层 -->
       <div class='config-bootom-pop' v-show="show_config_pop">
@@ -100,6 +100,7 @@ export default {
       this.saveSkinColor(skin)
     },
     changeFontSize(isAdd){
+      console.log(this.font_size)
       if ((this.font_size >= 30 && isAdd) || (this.font_size <= 10 && !isAdd)) {
           return;
       }
@@ -113,14 +114,14 @@ export default {
       this.$emit('show-chapter');
     },
     addShelft(){
-      if(is_add){
+      if(this.is_add){
         return
       }
       let book = this.current_book;
       book.isInShelf = true;
-      this.isAdded = true;
 			this.setCurrentBookInfo(book);
       this.addToShelft(this.current_book)
+      this.is_add = true;
     }
   },
   created(){
@@ -137,8 +138,8 @@ export default {
 <style lang="scss" scoped>
 // 皮肤颜色和夜晚模式
 .night-color{
-  color: rgba(255, 255, 255, .5);
-  background-color: #1a1a1a;
+  color: rgba(255, 255, 255, .5) !important;
+  background-color: #1a1a1a !important;
 }
 .skin-default {
   background-color: #c4b395;
@@ -164,9 +165,12 @@ export default {
   background-color: #f6f7f9;
 }
 
-
+.iconfont{
+  font-size: .3rem;
+}
 
 .read-content{
+  font-size: .28rem;
   padding:.2rem .2rem;
   // 设置
   .bg-black{
@@ -221,6 +225,11 @@ export default {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     &>.config-bootom-item{
       flex:0 0 33.3%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      line-height: .4rem;
     }
   }
   .config-enter{

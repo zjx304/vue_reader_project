@@ -24,7 +24,7 @@ export default {
   },
   data(){
     return{
-      title:'书籍详情',
+      title:'更多推荐',
       type:'type-three',
       id:this.$route.params.id,   
       list:[],
@@ -118,8 +118,9 @@ export default {
     }
   },
   created(){
-
-
+    if(this.$route.params.title){
+      this.title=this.$route.params.title
+    }
   }
 }
 </script>

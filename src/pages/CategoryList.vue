@@ -18,7 +18,7 @@ import Header from 'components/common/Header'
 import BookList from 'components/common/BookList'
 import CategoryBar from 'components/common/CategoryBar'
 import MescrollVue from 'mescroll.js/mescroll.vue'
-import { mapState } from 'vuex'
+import {mapState, mapMutations} from 'vuex';
 export default {
   name:'categorylist',
   components:{
@@ -51,7 +51,6 @@ export default {
   },
   data(){
     return{
-      title:'分类详情',
       type:'type-three',
       category_list:[],
       gender:'',
@@ -95,6 +94,9 @@ export default {
     next()
   },
   methods:{
+    ...mapMutations([
+      'saveFilter'
+    ]),
     // mescroll组件初始化的回调,可获取到mescroll对象
     mescrollInit (mescroll) {
       this.mescroll = mescroll  // 如果this.mescroll对象没有使用到,则mescrollInit可以不用配置
@@ -126,6 +128,7 @@ export default {
   created(){
     this.gender = this.$route.query.gender;
     this.major = this.$route.params.major;
+    this.title=this.$route.params.major;
     this.$store.state.filter.gender=this.gender
     this.$store.state.filter.major=this.major
     this.$store.state.filter.minor=''

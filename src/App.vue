@@ -37,8 +37,9 @@ export default {
 }
 
 // 弹出框 确认按钮颜色
-.mint-confirm-btn{
+.mint-confirm-btn,.mint-msgbox-confirm{
   color: #a70a0a !important;
 }
+
 </style>
 

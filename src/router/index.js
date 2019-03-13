@@ -34,7 +34,10 @@ export default new Router({
       component: Category
     },
     {
-      path: '/categoryList',
+      // 注意params传递参数，需要在路由中相应配置，query则不用
+      // 在返回的时候，如果路由没有配置相应的major,即：path: '/categoryList'   则返回的时候this.$route.params.major获取到的是undefined 
+      // 需要配置为path: '/categoryList/:major', 则返回的时候才能获取到this.$route.params.major的值
+      path: '/categoryList/:major',
       name: 'CategoryList',
       component: CategoryList
     },

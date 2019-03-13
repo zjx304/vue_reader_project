@@ -12,7 +12,7 @@
       </span>
     </div>
     <div class="chapter-list-section">
-      <div class="chapter-top"><i class="iconfont icon-jiantou_shangxiaqiehuan_o">正文卷</i></div>
+      <div class="chapter-top">正文卷</div>
       <ul class="chapter-list">
         <li class="chapter-list-item" v-for=" chapter in chapterName" :key="chapter.id" @click="selectChapter(chapter.id)">
           <span :class="[{'gray':chapter.isVip}]" >{{chapter.title}}</span>
@@ -63,6 +63,10 @@ export default {
 
 .icon-plus-select-up{
   display: inline-block;
+  font-size: .25rem;
+}
+.icon-vip{
+  font-size: .25rem;
 }
 .reverse{
    transform:rotate(180deg);
@@ -74,6 +78,9 @@ export default {
   color:gray;
 }
 
+.chapter{
+  font-size: .28rem;
+}
 
 .chapter-title{
   height: .9rem;
@@ -119,6 +126,7 @@ export default {
       padding:0 .4rem;
       height: .72rem;
       line-height: .72rem;
+      font-size: .3rem;
     }
     .chapter-list{
       position: absolute;

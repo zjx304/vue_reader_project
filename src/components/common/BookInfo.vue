@@ -122,7 +122,9 @@ export default {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp:3;
+  /*! autoprefixer: off */
   -webkit-box-orient: vertical;
+   /* autoprefixer: on */
 }
 
 

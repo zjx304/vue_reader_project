@@ -2,6 +2,7 @@
   <section class="read">
     <v-read-content :read-content="read_content" @show-chapter="showChapter()" @next-chapter="nextChapter()"></v-read-content>
     <v-chapter :chapter-name="chapter_name" :chapter-show="chapter_show" @select-chapter="selectChapterData" @hide-chapter-emit="hideChater()"></v-chapter>
+    <v-loading v-if="loading_show"></v-loading>
   </section>
 </template>
 
@@ -11,11 +12,13 @@ import { MessageBox } from 'mint-ui';
 import {mapState,mapMutations} from 'vuex';
 import ReadCotent from '../components/common/ReadContent'
 import Chapter from '../components/common/Chapter'
+import Loading from '../components/common/Loading'
 export default {
   name:'read',
   components:{
     'v-read-content':ReadCotent,
-    'v-chapter':Chapter
+    'v-chapter':Chapter,
+    'v-loading':Loading
   },
   data(){
     return{
@@ -25,6 +28,7 @@ export default {
       read_content:[],
       read_index:0,   //阅读到第几章
       from_menu:'',    //从目录进来
+      loading_show:true
     }
   },
   computed:{
@@ -64,6 +68,7 @@ export default {
       http.getChapters(book_id)
         .then(data => {
           this.chapter_name=data
+          this.loading_show=false
         })
     },
     // 获取特定章节内容
@@ -74,6 +79,7 @@ export default {
 						content_title: data.title,
 						content_list: data.isVip ? ['vip章节，请到正版网站阅读'] : data.cpContent.split('\n')     //换行符分割文章
           });
+          this.loading_show=false
         })
     },
     // ReadContent组件传出的是否显示章节
@@ -145,6 +151,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 
 </style>
 

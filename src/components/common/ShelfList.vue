@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import http from '@/http/api'
 import moment from 'moment';
 import { MessageBox } from 'mint-ui';
 import {mapState, mapMutations} from 'vuex';
@@ -63,12 +64,17 @@ export default {
        })
 
     }
+  },
+  created(){
+    
   }
   
 }
 </script>
 
 <style lang="scss" scoped>
+
+
 
 
 .delete{

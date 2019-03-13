@@ -32,7 +32,7 @@ const mutations = {
       }
     }
     if(!is_exist){
-      state.shelf_book_list.push(book);
+      state.shelf_book_list.unshift(book);
       // 保存到localstorage
       setStore('SHEFL_BOOK_LIST', state.shelf_book_list);
     }
@@ -69,7 +69,7 @@ const mutations = {
   },
   // 保存阅读历史记录
   saveReadHistory(state,book){
-    state.read_history.push(book)
+    state.read_history.unshift(book)
     setStore('READ_HISTORY', state.read_history);
   },
   // 保存日间和夜间模式
@@ -86,6 +86,9 @@ const mutations = {
   saveFontSize(state,font_size){
     state.font_size=font_size
     setStore('FONT_SIZE', state.font_size);
+  },
+  saveFilter(state,major){
+    state.filter.major=major
   }
 }
 

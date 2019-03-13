@@ -121,7 +121,9 @@ export default {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp:4;
+    /*! autoprefixer: off */
   -webkit-box-orient: vertical;
+   /* autoprefixer: on */;
 }
 
 
@@ -144,6 +146,10 @@ export default {
     font-size: .31rem;
   }
   .comment-list{
+    font-size: .28rem;
+    .iconfont{
+      font-size: .25rem;
+    }
     li{
       // padding:.275rem 0;
       padding-top: .275rem;

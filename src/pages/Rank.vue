@@ -1,25 +1,27 @@
 <template>
   <section class="rank">
     <v-header :title="title" :type="type"></v-header>
-    <mt-navbar v-model="selected">
-      <mt-tab-item class="gray" :id="item.en" v-for="(item,index) in top_tab_item" :key="index">
-        {{item.ch}}
-      </mt-tab-item>
-    </mt-navbar>
-    <mt-tab-container v-model="selected" swipeable>
-      <mt-tab-container-item :id="item.en" v-for="(item,index) in top_tab_item" :key="index">
-        <div class="rank-box">
-          <ul class="rank-tab-list">
-            <li v-for="left_tab_item in leftTab(item.en)" :key="left_tab_item._id" @click="changeRankId(left_tab_item._id)" :class="[left_tab_item._id==rank_book_id?'left_tab_active':'']">
-              <span>{{left_tab_item.shortTitle}}</span>
-            </li>
-          </ul>
-          <div class="rank-book-list">
-            <v-book-list :book-list="book_list"></v-book-list>
+    <div class="rank-content">
+      <mt-navbar v-model="selected">
+        <mt-tab-item class="gray" :id="item.en" v-for="(item,index) in top_tab_item" :key="index">
+          <span class="tab-item">{{item.ch}}</span>
+        </mt-tab-item>
+      </mt-navbar>
+      <mt-tab-container v-model="selected" swipeable>
+        <mt-tab-container-item :id="item.en" v-for="(item,index) in top_tab_item" :key="index">
+          <div class="rank-box">
+            <ul class="rank-tab-list">
+              <li v-for="left_tab_item in leftTab(item.en)" :key="left_tab_item._id" @click="changeRankId(left_tab_item._id)" :class="[left_tab_item._id==rank_book_id?'left_tab_active':'']">
+                <span class="left-item">{{left_tab_item.shortTitle}}</span>
+              </li>
+            </ul>
+            <div class="rank-book-list">
+              <v-book-list :book-list="book_list"></v-book-list>
+            </div>
           </div>
-        </div>
-      </mt-tab-container-item>
-    </mt-tab-container>
+        </mt-tab-container-item>
+      </mt-tab-container>
+    </div>
     <v-tab-bar></v-tab-bar>
   </section>
 </template>
@@ -119,11 +121,41 @@ export default {
   color: #ee4745;
 }
 
-.rank{
-  margin-top: .9rem;
+// 上侧tab栏选中
+.is-selected{
+  .tab-item{
+    position: relative;
+  }
+  .tab-item::before {
+    content: " ";
+    position: absolute;
+    bottom:-.1rem;
+    width: .4rem;
+    left:50%;
+    transform: translateX(-50%);
+    border-bottom: 2px solid #ee4745;
+  }
+}
+
+// 左侧栏选中
+.left_tab_active{
   position: relative;
-  height: 100%;
-  overflow-y: scroll;
+}
+.left_tab_active::before {
+  content: " ";
+  position: absolute;
+  top:50%;
+  transform: translateY(-50%);
+  left :.1rem;
+  height: .3rem;
+  border-left: 2px solid #ee4745;
+}
+
+.rank{
+  // margin-top: .9rem;
+  // position: relative;
+  // height: 100%;
+  // overflow-y: scroll;
   .mint-navbar{
     .is-selected{
       color:#ee4745;
@@ -134,7 +166,9 @@ export default {
       padding:.25rem 0;
       font-size: .26rem;
     }
-
+    .tab-item{
+      font-size: .26rem;
+    }
   }
 }
 
@@ -170,6 +204,12 @@ export default {
     bottom:1.2rem;
     overflow-y: scroll;
   }
+}
+.rank-content{
+  position: fixed;
+  width: 100%;
+  top:.9rem;
+  bottom:1.2rem; 
 }
 </style>
 

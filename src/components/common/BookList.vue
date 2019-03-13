@@ -13,9 +13,10 @@
                 {{book.shortIntro}}
               </div>
               <div class="book-info">
-                <div class="author"><i class="iconfont icon-yonghu"></i>{{book.author}}</div>
+                <div class="author"><i class="iconfont icon-renshu"></i>{{book.author}}</div>
                 <div class="label">
-                  <span>{{book.majorCate}}</span>
+                  <span v-if="book.majorCate">{{book.majorCate}}</span>
+                  <span v-else>{{book.cat}}</span>
                   <span class="lately-follower">{{book.latelyFollower|count_change_one}}人气</span>
                 </div>
               </div>
@@ -75,7 +76,7 @@ export default {
 .iconfont{
   font-size: .25rem;
 }
-.icon-yonghu{
+.icon-renshu{
   padding-right: .1rem;
 }
 
@@ -114,7 +115,9 @@ export default {
           text-overflow: ellipsis; 
           display: -webkit-box; 
           -webkit-line-clamp: 2; 
-          -webkit-box-orient: vertical; 
+            /*! autoprefixer: off */
+  -webkit-box-orient: vertical;
+   /* autoprefixer: on */; 
           -webkit-line-clamp:2; 
           font-size: .25rem;
         }

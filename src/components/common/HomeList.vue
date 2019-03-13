@@ -2,7 +2,7 @@
   <section class="home-list">
     <div class="home-title">
       <span class="left">{{channel.title}}</span>
-      <router-link :to="{ name: 'List', params: {id :channel._id} }" class="red">
+      <router-link :to="{ name: 'List', params: {id :channel._id,title:channel.title} }" class="red">
         <span class="right">查看更多<i class="iconfont icon-youjiantou"></i></span>
       </router-link>
     </div>
@@ -121,7 +121,9 @@ export default {
             text-overflow: ellipsis; 
             display: -webkit-box; 
             -webkit-line-clamp: 2; 
-            -webkit-box-orient: vertical; 
+              /*! autoprefixer: off */
+            -webkit-box-orient: vertical;
+            /* autoprefixer: on */; 
             -webkit-line-clamp:2; 
           }
           .book-info{

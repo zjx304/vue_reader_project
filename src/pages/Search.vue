@@ -1,14 +1,18 @@
 <template>
   <section class="search">
     <div class="header">
-      <div @click="$router.go(-1)"><i class="iconfont icon-fanhui"></i></div>
-      <div class="search-input">
-        <input type="text" placeholder="斗罗大陆" ref="search_input">
-        <span class="search-clear" @click="clearInput()"><i class="iconfont icon-guanbi"></i></span>
+      <div>
+        <div @click="$router.go(-1)"><i class="iconfont icon-fanhui"></i></div>
+        <div class="search-input">
+          <input type="text" placeholder="斗罗大陆" ref="search_input">
+          <span class="search-clear" @click="clearInput()"><i class="iconfont icon-guanbi"></i></span>
+        </div>
+        <div class="search-btn red" @click="searchWord()">搜索</div>
       </div>
-      <div class="search-btn red" @click="searchWord()">搜索</div>
     </div>
-    <v-book-list :book-list="search_books" v-if="search_books.length>0"></v-book-list>
+    <div class="search-list" v-if="show_search_books">
+      <v-book-list :book-list="search_books" ></v-book-list>
+    </div>
     <div class="search-info" v-else>
       <div class="search-hot">
         <h4>热门搜索</h4>
@@ -45,7 +49,8 @@ export default {
   data(){
     return{
       hot_keywords:[],
-      search_books:[]
+      search_books:[],
+      show_search_books:false
     }
   },
   computed:{
@@ -75,6 +80,7 @@ export default {
         var word=keyword
         this.$refs.search_input.value=word
       }
+      this.show_search_books=true
       // 保存搜索记录到localstorage
       this.setSearchHistory(word);
       http.searchByKeyword(word)
@@ -84,13 +90,13 @@ export default {
     },
     // 清除input框
     clearInput(){
+      this.show_search_books=false
       this.$refs.search_input.value=''
       this.search_books=[]
     },
     clearSearchHistory(){
       // 清除localstorage的搜索记录
       this.deleteSearchHistory()
-
     }
   },
   created(){
@@ -100,7 +106,15 @@ export default {
     this.$nextTick(function(){
       this.$refs.search_input.focus()
     }) 
-  }
+  },
+  beforeRouteLeave(to, from, next) {
+		if (this.show_search_books) {
+      this.show_search_books=false
+      this.$refs.search_input.value=''
+		} else {
+			next()
+		}
+	} 
 }
 </script>
 
@@ -113,15 +127,31 @@ export default {
   color: #9c9ca4 !important;
 }
 
+.iconfont{
+  font-size: .25rem;
+}
+
 .search{
+  font-size: .28rem;
   .header{
+    position: fixed;
+    top:0;
     width: 100%;
     height: .9rem;
+    background: #fff;
     display: flex;
-    justify-content: space-between;
+    justify-content:center;
     align-items: center;
-    padding:0 .34rem;
-    box-sizing: border-box;
+    &>div{
+      width: 6.82rem;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #CACBCD; 
+    }
+
+
     .search-input{
       position: relative;
       background: #E9EAEC;
@@ -158,12 +188,16 @@ export default {
 
     }
   }
+  .search-list{
+    margin-top: .9rem;
+
+  }
   .search-info{
     margin:0 auto;
+    margin-top: .9rem;
     width: 6.83rem;
     .search-hot{
-      border-top: 1px solid #CACBCD; 
-      // padding-top: .44rem;  
+      // border-top: 1px solid #CACBCD; 
       h4{
         height: 1rem;
         line-height: 1rem;
@@ -182,7 +216,6 @@ export default {
       }
     }
     .search-history{
-      // padding-top: .44rem;  
       .search-history-header{
         display: flex;
         justify-content: space-between;
@@ -206,4 +239,7 @@ export default {
     }
   }
 }
+
+
+
 </style>
