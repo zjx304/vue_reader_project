@@ -112,10 +112,9 @@ import moment from 'moment';
       </swiper-slide>
     </swiper>
 引入插件
-
+ ```
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-设置swiper
-
+//设置swiper
   data () {
     return {
       curIndex: 0, // 当前tab的下标
@@ -132,7 +131,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
       offsetTop:0,    //吸顶
     }
   },
-监听轮播
+//监听轮播
 
   computed: {
     swiper () { // 轮播对象
@@ -147,7 +146,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
       }
     }
   },
-当轮播切换的时候执行changeTab，tabIndex为轮播的索引
+//当轮播切换的时候执行changeTab，tabIndex为轮播的索引
 
   methods: {
     // 切换菜单
@@ -167,7 +166,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
     },
   },
 }
-
+ ```
 
  
 
