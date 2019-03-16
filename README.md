@@ -17,8 +17,8 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-#技术难点
-##1.处理返回时间
+# 技术难点
+## 1.处理返回时间
 <span class="time red">{{ book.updated | time}}</span>
 
 import moment from 'moment';
@@ -30,4 +30,4 @@ import moment from 'moment';
         }
     },
 
-##2.
+## 2.
