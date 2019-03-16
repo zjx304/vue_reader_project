@@ -167,21 +167,24 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
   },
 }
  ```
+## 3.项目上线反向代理
+```#放开下列文件限制
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_connect_module modules/mod_proxy_connect.so
+LoadModule proxy_ftp_module modules/mod_proxy_ftp.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
 
- 
+#在文件末尾设置追书神器项目代理
+ProxyPass /api http://api.zhuishushenqi.com
+ProxyPassReverse /api http://api.zhuishushenqi.com
 
-## 3.菜单左右联动效果
+ProxyPass /chapterapi http://chapter2.zhuishushenqi.com/chapter/http://vip.zhuishushenqi.com
+ProxyPassReverse /chapterapi http://chapter2.zhuishushenqi.com/chapter/http://vip.zhuishushenqi.com
+```
+##更多内容请看我的博客：https://www.cnblogs.com/zjx304/p/10411596.html
 
-## 4.筛选栏动画效果
 
-## 5.根据评分显示相应星级
-
-## 6.退出时提示添加到书架
-
-## 7.改变皮肤颜色和字体大小
-
-## 8.项目上线反向代理
-
+# 效果图展示
 
 ### 轮播、tab切换、吸顶效果
 ![avatar](https://github.com/zjx304/vueproject/blob/master/gif/%E5%90%B8%E9%A1%B6%E6%BB%91%E5%8A%A8%E5%88%87%E6%8D%A2%E6%95%88%E6%9E%9C.gif)
