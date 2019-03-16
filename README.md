@@ -31,6 +31,37 @@ import moment from 'moment';
     },
 
 ## 2.tab切换和吸顶效果
+吸顶效果
+
+    `<div class="tabs-warp" :class="searchBarFixed == true ? 'isFixed' :''">
+      <div ref="tabsContent" class="tabs-content">
+    <!-- 导航 -->
+      </div>
+    <div v-if="searchBarFixed" class="replace-tab"></div>`
+定义函数 当滑动距离超过tab栏到顶部距离的时候，应用isFixed样式。
+
+    handleScroll () {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      if(this.offsetTop==0){
+        this.offsetTop=document.querySelector('.tabs-warp').offsetTop-document.querySelector('.header').offsetHeight
+      }
+      if (scrollTop > this.offsetTop) {
+          this.searchBarFixed = true
+      } else {
+          this.searchBarFixed = false
+      }
+    },
+在mounted阶段，监听滚动，当滚动的时候实现上面的函数
+
+  mounted(){
+    window.addEventListener('scroll', this.handleScroll)
+  },
+当离开组件的时候需要移除
+
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+
 
 ## 3.菜单左右联动效果
 
