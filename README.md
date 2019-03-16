@@ -31,3 +31,7 @@ import moment from 'moment';
     },
 
 ## 2.
+
+
+
+![avatar](/gif/吸顶滑动切换效果.gif)
