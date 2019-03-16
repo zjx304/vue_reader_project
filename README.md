@@ -33,5 +33,15 @@ import moment from 'moment';
 ## 2.
 
 
-
+### 轮播、tab切换、吸顶效果
 ![avatar](https://github.com/zjx304/vueproject/blob/master/gif/%E5%90%B8%E9%A1%B6%E6%BB%91%E5%8A%A8%E5%88%87%E6%8D%A2%E6%95%88%E6%9E%9C.gif)
+### 左右联动
+![avatar](https://github.com/zjx304/vueproject/blob/master/gif/%E5%B7%A6%E5%8F%B3%E8%81%94%E5%8A%A8%E7%AD%9B%E9%80%89.gif)
+### 滑动切换tab
+![avatar](https://github.com/zjx304/vueproject/blob/master/gif/%E5%B7%A6%E5%8F%B3%E6%BB%91%E5%8A%A8.gif)
+### 搜索
+![avatar](https://github.com/zjx304/vueproject/blob/master/gif/%E6%90%9C%E7%B4%A2.gif)
+### 阅读 添加到书架 改变皮肤颜色和字体大小 选择目录章节
+![avatar](https://github.com/zjx304/vueproject/blob/master/gif/%E9%98%85%E8%AF%BB.gif)
+
+
