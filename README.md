@@ -18,7 +18,7 @@ npm run build
 npm run build --report
 ```
 # 技术难点
-## 1.处理返回时间
+## 1.filter处理返回时间
 <span class="time red">{{ book.updated | time}}</span>
 
 import moment from 'moment';
@@ -30,7 +30,19 @@ import moment from 'moment';
         }
     },
 
-## 2.
+## 2.tab切换和吸顶效果
+
+## 3.菜单左右联动效果
+
+## 4.筛选栏动画效果
+
+## 5.根据评分显示相应星级
+
+## 6.退出时提示添加到书架
+
+## 7.改变皮肤颜色和字体大小
+
+## 8.项目上线反向代理
 
 
 ### 轮播、tab切换、吸顶效果
