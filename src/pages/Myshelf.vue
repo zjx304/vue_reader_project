@@ -49,14 +49,18 @@ export default {
     showHistory(){
 
     }
+  },
+  created(){
+
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
-
-
+.my-shelf{
+  position: relative;
+  height: 100%;
+}
 .header{
   position: fixed;
   top:0;
@@ -83,11 +87,8 @@ export default {
     }
   }
 }
-.my-shelf{
-  margin-top: .9rem;
-}
 .shelf-box{
-  position: fixed;
+  position: absolute;
   top:.9rem;
   bottom: 1.2rem;
   width: 100%;

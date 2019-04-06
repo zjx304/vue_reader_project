@@ -47,7 +47,9 @@ const mutations = {
   },
   // 删除全部书从书架
   deleteAllShelft(state){
-    state.shelf_book_list.clear();
+    state.shelf_book_list=[]
+    // 或
+    state.shelf_book_list.length=0
     removeStore('SHEFL_BOOK_LIST')
   },
   // 保存搜索记录

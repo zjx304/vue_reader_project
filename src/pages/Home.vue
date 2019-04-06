@@ -11,8 +11,8 @@
       </swiper>
       <div class="swiper-pagination"></div>
     </div>
-    <div class="tabs-warp" :class="searchBarFixed == true ? 'isFixed' :''">
-      <div ref="tabsContent" class="tabs-content">
+    <div class="tabs-warp" >
+      <div ref="tabsContent" :class="[searchBarFixed == true ? 'isFixed' :'','tabs-content']">
         <div style="display: inline-block"> <!--PC端运行,加上这个div可修复tab-bar错位的问题 -->
           <ul class="tabs" ref="tabs">
             <li class="tab" v-for="(tab,i) in tabs" :class="{active: i===curIndex}" :key="i" @click="changeTab(i)">{{tab.name}}</li>
@@ -21,7 +21,6 @@
         </div>
       </div>
     </div>
-    <div v-if="searchBarFixed" class="replace-tab"></div>
     <!--轮播-->
     <swiper ref="mySwiper" :options="swiperOption">
       <swiper-slide>
@@ -221,10 +220,6 @@ export default {
  top:.9rem;
  z-index:999;
 }
-.replace-tab{
-  widows: 100%;
-  height: 1rem;
-}
 .home{
   margin-top: .9rem;
   .home-swiper{
@@ -271,9 +266,8 @@ export default {
 /*菜单*/
 .tabs-warp{
   text-align: center;
-  height: .84rem;/*高度比tabs-content小, 目的是隐藏tabs的水平滚动条*/
+  height: .84rem; 
   overflow-y: hidden;
-  border-bottom: 1px solid #eee;
   box-sizing: content-box;
 }
 .tab{
@@ -283,6 +277,8 @@ export default {
 .tabs-warp .tabs-content{
   width: 100%;
   height: 1rem;
+  border-bottom: 1px solid #eee;
+  box-sizing: content-box;
   overflow-x: auto;
 }
 .tabs-warp .tabs-content .tabs{

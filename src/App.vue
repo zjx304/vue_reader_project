@@ -40,6 +40,8 @@ export default {
 .mint-confirm-btn,.mint-msgbox-confirm{
   color: #a70a0a !important;
 }
-
+.container{
+  height: 100%;
+}
 </style>
 
