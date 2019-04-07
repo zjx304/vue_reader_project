@@ -108,12 +108,12 @@ export default {
     }) 
   },
   beforeRouteLeave(to, from, next) {
-		if (this.show_search_books) {
+		if (this.show_search_books && /book/.test(to.path)!==true){
       this.show_search_books=false
       this.$refs.search_input.value=''
 		} else {
 			next()
-		}
+    }
 	} 
 }
 </script>

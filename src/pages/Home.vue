@@ -135,7 +135,6 @@ export default {
       let curTab = this.tabs[this.curIndex];// 当前列表
       let newTab = this.tabs[tabIndex];// 新转换的列表
       this.curIndex = tabIndex; // 切换菜单
-      curTab.mescroll
       this.swiper.slideTo(tabIndex);
       let tabsContent = this.$refs.tabsContent;
       let tabDom = tabsContent.getElementsByClassName('tab')[tabIndex];
